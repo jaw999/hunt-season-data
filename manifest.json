@@ -1,0 +1,48 @@
+{
+  "states": {
+    "NY": {
+      "name": "New York",
+      "abbr": "NY",
+      "verified": true,
+      "unitCount": 75,
+      "agency": "NYSDEC"
+    },
+    "TX": {
+      "name": "Texas",
+      "abbr": "TX",
+      "verified": false,
+      "unitCount": 3,
+      "agency": "TPWD"
+    },
+    "CO": {
+      "name": "Colorado",
+      "abbr": "CO",
+      "verified": false,
+      "unitCount": 2,
+      "agency": "CPW"
+    },
+    "AL": {
+      "name": "Alabama",
+      "abbr": "AL",
+      "verified": false,
+      "unitCount": 2,
+      "agency": "ADCNR"
+    },
+    "WI": {
+      "name": "Wisconsin",
+      "abbr": "WI",
+      "verified": false,
+      "unitCount": 2,
+      "agency": "WDNR"
+    },
+    "AK": {
+      "name": "Alaska",
+      "abbr": "AK",
+      "verified": false,
+      "unitCount": 2,
+      "agency": "ADF&G"
+    }
+  },
+  "season": "2025-26",
+  "updated": "2025-08"
+}
