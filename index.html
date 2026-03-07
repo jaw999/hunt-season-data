@@ -178,6 +178,12 @@ async function fetchManifest() {
     if (!res.ok)
         throw new Error('Failed to load manifest');
     _manifestCache = await res.json();
+    // Pre-populate _cache with all embedded state data - no separate fetches needed
+    Object.keys(_manifestCache.states).forEach(code => {
+        if (_manifestCache.states[code].data && !_cache[code]) {
+            _cache[code] = expandState(_manifestCache.states[code].data);
+        }
+    });
     return _manifestCache;
 }
 // allStates loaded at runtime from manifest
@@ -451,13 +457,19 @@ function HuntGuide({ initialScreen } = {}) {
                     React.createElement("p", { style: { color: "#5a3028", fontSize: 12, marginBottom: 16 } }, stateError),
                     React.createElement("button", { onClick: () => setStateError(null), style: { padding: "8px 18px", background: "#2a2a18", border: "1px solid #3a3a20", borderRadius: 10, color: "#c8b860", cursor: "pointer", fontSize: 13 } }, "Dismiss")))),
             React.createElement("div", { style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-                screen === "home" && React.createElement(HomeScr, Object.assign({ allStates: allStates, detectLoc: detectLoc, locLoading: locLoading, locError: locError, setScreen: setScreen, setSelState: setSelState, setSelUnit: setSelUnit, onSelectSpeciesBrowse: () => setScreen("browse-species"), onSelectStateSpeciesBrowse: () => setScreen("browse-state-species"), onFindLocation: () => setScreen("find-location") }, tp)),
+                screen === "home" && React.createElement(HomeScr, Object.assign({ allStates: allStates, detectLoc: detectLoc, locLoading: locLoading, locError: locError, setScreen: setScreen, setSelState: setSelState, setSelUnit: setSelUnit, onSelectSpeciesBrowse: async () => {
+            setScreen("browse-species");
+            // Pre-load all available states so species index is populated
+            const codes = allStates.map(s => s.code || s.abbr).filter(c => c);
+            await Promise.all(codes.map(c => fetchState(c).catch(()=>{})));
+            setSelState(prev => prev); // trigger re-render
+        }, onSelectStateSpeciesBrowse: () => setScreen("browse-state-species"), onFindLocation: () => setScreen("find-location") }, tp)),
                 screen === "browse-species" && React.createElement(SpeciesBrowseScr, { onBack: () => setScreen("home"), checkDate: checkDate, isTripMode: isTripMode, tripDate: tripDate, onSelectUnit: selectUnit }),
-                screen === "browse-state-species" && React.createElement(StateSpeciesBrowseScr, { onBack: () => setScreen("home"), checkDate: checkDate, isTripMode: isTripMode, tripDate: tripDate, onSelectUnit: selectUnit }),
+                screen === "browse-state-species" && React.createElement(StateSpeciesBrowseScr, { onBack: () => setScreen("home"), checkDate: checkDate, isTripMode: isTripMode, tripDate: tripDate, onSelectUnit: selectUnit, allStates: allStates, fetchState: fetchState }),
                 screen === "find-location" && React.createElement(FindLocationScr, { onBack: () => setScreen("home"), resolveLatLng: resolveLatLng, setSelState: setSelState, setSelUnit: setSelUnit, setScreen: setScreen }),
                 screen === "pick-state" && React.createElement(StateScr, { allStates: allStates, onSelect: c => { selectState(c); setSelUnit(null); setScreen("pick-unit"); }, onBack: goHome }),
                 screen === "pick-unit" && curState && React.createElement(UnitScr, Object.assign({ state: curState, checkDate: checkDate, onSelect: u => { setSelUnit(u); setScreen("species"); }, onBack: () => setScreen("pick-state"), detectLoc: detectLoc, locLoading: locLoading, onFindLocation: () => setScreen("find-location") }, tp)),
-                screen === "species" && curUnit && React.createElement(SpeciesScr, Object.assign({ unit: curUnit, stateName: curState.name, stateCode: selState, agency: curState.agency, verified: curState.verified, filtered: filtered, catFilter: catFilter, setCatFilter: setCatFilter, statusFilter: statusFilter, setStatusFilter: setStatusFilter, search: search, setSearch: setSearch, setSel: setSelSpecies, onBack: () => { setSelUnit(null); setScreen("pick-unit"); }, onHome: goHome, onSwitchState: c => { selectState(c); setSelUnit(null); setScreen("pick-unit"); }, onSwitchUnit: u => { setSelUnit(u); } }, tp))),
+                screen === "species" && curUnit && React.createElement(SpeciesScr, Object.assign({ unit: curUnit, stateName: curState.name, stateCode: selState, agency: curState.agency, verified: curState.verified, allStates: allStates, filtered: filtered, catFilter: catFilter, setCatFilter: setCatFilter, statusFilter: statusFilter, setStatusFilter: setStatusFilter, search: search, setSearch: setSearch, setSel: setSelSpecies, onBack: () => { setSelUnit(null); setScreen("pick-unit"); }, onHome: goHome, onSwitchState: async c => { setSelUnit(null); if (c === selState) { setScreen("pick-unit"); } else { selectState(c); await fetchState(c).catch(()=>{}); setScreen("pick-unit"); } }, onSwitchUnit: u => { setSelUnit(u); } }, tp))),
             React.createElement("div", { style: { height: 34, background: "#110d06", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
                 React.createElement("div", { style: { width: 130, height: 5, background: "#2e2010", borderRadius: 3 } })),
             enrichedSel && (React.createElement("div", { className: "hmbg", onClick: () => setSelSpecies(null), style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.82)", display: "flex", alignItems: "flex-end", zIndex: 99 } },
@@ -775,13 +787,24 @@ function FindLocationScr({ onBack, resolveLatLng, setSelState, setSelUnit, setSc
                 React.createElement("p", { style: { color: "#2a3a28", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 } }, "Examples"),
                 ["Saranac Lake, NY", "Big Sandy, TX", "12983", "Estes Park, CO", "Troy, AL"].map(ex => (React.createElement("button", { key: ex, className: "hbtn", onClick: () => { setQuery(ex); geocode(ex); }, style: { display: "block", width: "100%", textAlign: "left", padding: "10px 14px", background: "#1b2619", borderRadius: 10, marginBottom: 6, border: "1px solid #263616", color: "#4a7a44", fontSize: 13, cursor: "pointer" } }, ex))))))));
 }
-function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSelectUnit }) {
+function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSelectUnit, allStates, fetchState }) {
     const [selStateCode, setSelStateCode] = useState(null);
     const [selSpecies, setSelSpecies] = useState(null);
+    const [loadingState, setLoadingState] = useState(false);
     const speciesIndex = useMemo(() => buildSpeciesIndex(), [Object.keys(_cache).join()]);
+
+    // Load state data when a state is selected
+    useEffect(() => {
+        if (selStateCode && !_cache[selStateCode] && fetchState) {
+            setLoadingState(true);
+            fetchState(selStateCode).finally(() => setLoadingState(false));
+        }
+    }, [selStateCode]);
     // LEVEL 3: units for this species in this state
     if (selStateCode && selSpecies) {
         const st = _cache[selStateCode];
+        if (!st) return React.createElement("div", { className: "sc", style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" } },
+            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#7ec87a", animation:"spin .8s linear infinite" } }));
         const spEntry = speciesIndex.find(s => s.name === selSpecies.name);
         const hits = ((spEntry === null || spEntry === void 0 ? void 0 : spEntry.hits) || [])
             .filter(h => h.stateCode === selStateCode)
@@ -857,6 +880,9 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
     // LEVEL 2: species available in this state
     if (selStateCode) {
         const st = _cache[selStateCode];
+        if (!st) return React.createElement("div", { className: "sc", style: { flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:12 } },
+            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#7ec87a", animation:"spin .8s linear infinite" } }),
+            React.createElement("p", { style: { color:"#4a7a44", fontSize:13 } }, "Loading " + selStateCode + "..."));
         // Build species list for this state from its units
         const spMap = {};
         for (const unit of st.units) {
@@ -906,6 +932,7 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
                     React.createElement("p", { style: { color: "#4a3020", fontSize: 10, letterSpacing: 2, textTransform: "uppercase" } }, "State \u203A Species \u203A Unit")))),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "10px 20px" } }, allStates.map(s => {
             const st = _cache[s.code];
+            if (!st) return null;
             const openCount = st.units.reduce((a, u) => a + u.species.reduce((b, sp) => b + (sp.seasons.some(se => isSeasonOpen(se.ranges, checkDate)) ? 1 : 0), 0), 0);
             return (React.createElement("button", { key: s.code, className: "hucard", onClick: () => setSelStateCode(s.code), style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "13px 14px", marginBottom: 8, background: openCount > 0 ? "#223018" : "#2c2010", border: ("1px solid " + (openCount > 0 ? "#2a4018" : "#2a1608")), borderRadius: 14, cursor: "pointer", textAlign: "left" } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
