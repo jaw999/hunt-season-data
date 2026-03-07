@@ -1042,7 +1042,7 @@ function UnitScr({ state, checkDate, onSelect, onBack, detectLoc, locLoading, tr
                         " species")));
             }))));
 }
-function SpeciesScr({ unit, stateName, stateCode, agency, verified, filtered, catFilter, setCatFilter, statusFilter, setStatusFilter, search, setSearch, setSel, onBack, onHome, onSwitchState, onSwitchUnit, checkDate, tripDate, setTripDate, isTripMode, liveNow }) {
+function SpeciesScr({ unit, stateName, stateCode, agency, verified, allStates, filtered, catFilter, setCatFilter, statusFilter, setStatusFilter, search, setSearch, setSel, onBack, onHome, onSwitchState, onSwitchUnit, checkDate, tripDate, setTripDate, isTripMode, liveNow }) {
     const openCount = filtered.filter(s => s.seasons.some(se => se.isOpen)).length;
     const [showStatePicker, setShowStatePicker] = useState(false);
     const [showUnitPicker, setShowUnitPicker] = useState(false);
