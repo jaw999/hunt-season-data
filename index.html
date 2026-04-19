@@ -115,7 +115,13 @@ function resolveRange(rng, today) {
     return { start: makeDate(rng.startMonth, rng.startDay, sy), end: makeDate(rng.endMonth, rng.endDay, ey) };
 }
 function isSeasonOpen(ranges, checkDate = new Date()) {
-    if (!ranges || !ranges.length)
+    if (!ranges)
+        return false;
+    if (ranges === 'P')
+        return true;
+    if (ranges === 'N')
+        return false;
+    if (!ranges.length)
         return false;
     for (const rng of ranges) {
         if (rng.permanent)
@@ -159,7 +165,7 @@ const _expandR = r => {
     return Object.assign(Object.assign({ startMonth: sm, startDay: sd, endMonth: em, endDay: ed }, (sy && { startYear: sy })), (ey && { endYear: ey }));
 };
 function expandState(raw) {
-    return Object.assign(Object.assign({}, raw), { units: raw.units.map(u => (Object.assign(Object.assign({}, u), { species: u.species.map(sp => (Object.assign(Object.assign({}, sp), { seasons: sp.seasons.map(se => (Object.assign(Object.assign({}, se), { ranges: se.ranges.map(_expandR) }))) }))) }))) });
+    return Object.assign(Object.assign({}, raw), { units: raw.units.map(u => (Object.assign(Object.assign({}, u), { species: u.species.map(sp => (Object.assign(Object.assign({}, sp), { seasons: sp.seasons.map(se => (Object.assign(Object.assign({}, se), { ranges: (se.ranges === 'P' || se.ranges === 'N') ? se.ranges : se.ranges.map(_expandR) }))) }))) }))) });
 }
 const _cache = {};
 async function fetchState(stateCode) {
