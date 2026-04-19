@@ -135,6 +135,7 @@ function isSeasonOpen(ranges, checkDate = new Date()) {
     return false;
 }
 function nextOpenDate(ranges, from = new Date()) {
+    if (!ranges || ranges === 'P' || ranges === 'N') return null;
     let earliest = null;
     for (const rng of ranges) {
         if (rng.permanent || rng.none)
