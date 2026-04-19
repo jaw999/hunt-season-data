@@ -158,15 +158,15 @@ function fmtDate(d) { return d.toLocaleDateString("en-US", { weekday: "short", m
 function fmtShort(d) { return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); }
 const GITHUB = 'https://raw.githubusercontent.com/jaw999/hunt-season-data/main';
 const _expandR = r => {
-    if (r === 'P')
-        return { permanent: true };
-    if (r === 'N')
-        return { none: true };
+    if (!r) return { none: true };
+    if (r === 'P') return { permanent: true };
+    if (r === 'N') return { none: true };
+    if (typeof r === 'object' && !Array.isArray(r)) return r; // already expanded
     const [sm, sd, em, ed, sy, ey] = r;
     return Object.assign(Object.assign({ startMonth: sm, startDay: sd, endMonth: em, endDay: ed }, (sy && { startYear: sy })), (ey && { endYear: ey }));
 };
 function expandState(raw) {
-    return Object.assign(Object.assign({}, raw), { units: raw.units.map(u => (Object.assign(Object.assign({}, u), { species: u.species.map(sp => (Object.assign(Object.assign({}, sp), { seasons: sp.seasons.map(se => (Object.assign(Object.assign({}, se), { ranges: (se.ranges === 'P' || se.ranges === 'N') ? se.ranges : se.ranges.map(_expandR) }))) }))) }))) });
+    return Object.assign(Object.assign({}, raw), { units: raw.units.map(u => (Object.assign(Object.assign({}, u), { species: u.species.map(sp => (Object.assign(Object.assign({}, sp), { seasons: sp.seasons.map(se => (Object.assign(Object.assign({}, se), { ranges: (!se.ranges || se.ranges === 'P' || se.ranges === 'N') ? (se.ranges || 'N') : (Array.isArray(se.ranges) ? se.ranges.map(_expandR) : se.ranges) }))) }))) }))) });
 }
 const _cache = {};
 async function fetchState(stateCode) {
