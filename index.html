@@ -5,40 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Hunt Season Guide</title>
   <meta name="description" content="Live hunting season dates by state and wildlife management unit."/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet"/>
+  
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;background:#0e0b07;font-family:system-ui,sans-serif;overflow-x:hidden;font-size:16px;-webkit-font-smoothing:antialiased;}
-    #landing{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:48px 24px 64px;background:radial-gradient(ellipse at 50% 0%,#2a1c0c 0%,#0e0b07 65%);}
+    html,body{height:100%;background:#f5f0eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+    #landing{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:100vh;padding:48px 24px 64px;
+      background:linear-gradient(160deg,#ffffff 0%,#f5f0eb 60%,#f0e8e0 100%);
+    }
     #landing.hidden{display:none;}
-    .eyebrow{font-family:'Source Serif 4',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#4a3018;margin-bottom:24px;}
-    .title{font-family:'Playfair Display',serif;font-size:clamp(60px,11vw,100px);font-weight:900;color:#e8c87a;line-height:.92;text-align:center;margin-bottom:6px;}
-    .title-sub{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:700;color:#7ab060;text-align:center;margin-bottom:32px;}
-    .desc{font-family:'Source Serif 4',serif;font-size:clamp(14px,2vw,17px);color:#b89878;text-align:center;line-height:1.8;max-width:500px;margin-bottom:44px;}
-    .cta{display:inline-flex;align-items:center;gap:12px;padding:18px 44px;background:linear-gradient(135deg,#b4823a,#7a5018);border-radius:50px;color:#fff8ee;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;cursor:pointer;border:none;box-shadow:0 6px 32px rgba(180,130,60,.3);transition:transform .18s,box-shadow .18s;}
-    .cta:hover{transform:translateY(-3px);box-shadow:0 12px 44px rgba(180,130,60,.42);}
-    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:56px;max-width:480px;width:100%;}
+
+    .eyebrow{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:11px;letter-spacing:4px;
+      text-transform:uppercase;color:#999;margin-bottom:20px;}
+    .title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(60px,11vw,100px);
+      font-weight:900;color:#1a1a1a;line-height:.92;text-align:center;margin-bottom:6px;}
+    .title-sub{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(26px,5vw,44px);
+      font-weight:700;color:#c0392b;text-align:center;margin-bottom:28px;}
+    .desc{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(14px,2vw,17px);
+      color:#555;text-align:center;line-height:1.8;max-width:500px;margin-bottom:44px;}
+
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+      margin-top:40px;max-width:480px;width:100%;}
     @media(min-width:600px){.features{grid-template-columns:repeat(4,1fr);max-width:700px;}}
-    .feat{background:rgba(255,255,255,.025);border:1px solid rgba(180,130,60,.1);border-radius:18px;padding:20px 16px;text-align:center;transition:all .18s;cursor:pointer;}
-    .feat:hover{background:rgba(180,130,60,.08);border-color:rgba(180,130,60,.28);transform:translateY(-2px);}
+    .feat{background:#fff;border:1px solid #e8e0d8;border-radius:18px;
+      padding:20px 16px;text-align:center;transition:all .18s;cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,.06);}
+    .feat:hover{border-color:#c0392b;transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,57,43,.12);}
     .feat-icon{font-size:26px;margin-bottom:10px;}
-    .feat-title{font-family:'Playfair Display',serif;color:#c4943a;font-size:13px;font-weight:700;margin-bottom:6px;}
-    .feat-desc{color:#b89878;font-size:12px;line-height:1.6;}
-    .divider{width:100%;max-width:520px;height:1px;background:linear-gradient(90deg,transparent,#2a1c0c,transparent);margin:52px 0 36px;}
-    .states-label{font-family:'Source Serif 4',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#3a2510;margin-bottom:14px;}
+    .feat-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;font-size:13px;font-weight:700;margin-bottom:5px;}
+    .feat-desc{color:#777;font-size:12px;line-height:1.6;}
+
+    .divider{width:100%;max-width:520px;height:1px;background:#e8e0d8;margin:44px 0 32px;}
+    .states-label{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:10px;letter-spacing:3px;
+      text-transform:uppercase;color:#aaa;margin-bottom:14px;}
     .states{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:480px;}
-    .chip{padding:6px 15px;background:#180f06;border:1px solid #2a1808;border-radius:20px;font-family:'Source Serif 4',serif;font-size:12px;}
-    .chip.v{color:#7ab060;border-color:#1e3010;}
-    .chip.c{color:#2a1c0c;border-style:dashed;border-color:#1e1208;}
-    .footer{margin-top:52px;color:#2a1c0c;font-size:11px;text-align:center;line-height:2;max-width:440px;font-family:'Source Serif 4',serif;}
-    .footer a{color:#3a2818;text-decoration:none;}
+    .chip{padding:5px 14px;background:#fff;border:1px solid #ddd;border-radius:20px;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;color:#555;}
+    .chip.v{color:#c0392b;border-color:#e8b4ae;}
+    .chip.c{color:#aaa;border-style:dashed;}
+    .footer{margin-top:44px;color:#aaa;font-size:11px;text-align:center;
+      line-height:2;max-width:440px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+    .footer a{color:#c0392b;text-decoration:none;}
+
     #app-shell{display:none;height:100vh;}
     #app-shell.visible{display:block;}
-    #app-loading{display:none;position:fixed;inset:0;background:#0e0b07;align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px;}
+    #app-loading{display:none;position:fixed;inset:0;background:#fff;
+      align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px;}
     #app-loading.visible{display:flex;}
-    .spinner{width:40px;height:40px;border-radius:50%;border:3px solid #2a1c0c;border-top-color:#7ec87a;animation:spin .8s linear infinite;}
+    .spinner{width:36px;height:36px;border-radius:50%;
+      border:3px solid #eee;border-top-color:#c0392b;
+      animation:spin .8s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
-    .loading-text{color:#4a7a44;font-family:'Source Serif 4',serif;font-size:14px;}
+    .loading-text{color:#c0392b;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;}
+  
+    /* Arrow hit animation */
+    @keyframes arrowFly {
+      0%   { transform: translateX(-60px) scaleX(1); opacity: 0; }
+      40%  { transform: translateX(0px) scaleX(1); opacity: 1; }
+      55%  { transform: translateX(4px) scaleX(.85); opacity: 1; }
+      70%  { transform: translateX(-2px) scaleX(1.05); opacity: 1; }
+      85%  { transform: translateX(1px) scaleX(.95); opacity: .8; }
+      100% { transform: translateX(0px) scaleX(1); opacity: 0; }
+    }
+    @keyframes cardHit {
+      0%   { transform: translateX(0); }
+      30%  { transform: translateX(6px); }
+      50%  { transform: translateX(-3px); }
+      70%  { transform: translateX(2px); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes cardFlash {
+      0%   { background: inherit; }
+      25%  { background: rgba(192,57,43,.15); }
+      100% { background: inherit; }
+    }
+    .arrow-hit {
+      animation: cardHit .35s ease-out, cardFlash .4s ease-out;
+    }
+    .arrow-overlay {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 22px;
+      animation: arrowFly .45s cubic-bezier(.2,.8,.4,1) forwards;
+      transform-origin: right center;
+      white-space: nowrap;
+    }
   </style>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
@@ -50,10 +104,10 @@
   <p class="title-sub">Season Guide</p>
   <p class="desc">Live hunting season dates for every state and wildlife management unit. Know what&rsquo;s open before you go &mdash; or plan your next trip.</p>
   <div class="features">
-    <div class="feat" onclick="launchApp('pick-state')"><div class="feat-icon">&#128506;</div><div class="feat-title">By State</div><div class="feat-desc">Pick a state then drill into your Wildlife Management Unit</div></div>
-    <div class="feat" onclick="launchApp('browse-species')"><div class="feat-icon">&#129420;</div><div class="feat-title">By Species</div><div class="feat-desc">Browse deer, turkey, waterfowl &amp; more across all states</div></div>
-    <div class="feat" onclick="launchApp('trip')"><div class="feat-icon">&#128197;</div><div class="feat-title">Trip Planner</div><div class="feat-desc">Pick a future date to see what seasons will be open</div></div>
-    <div class="feat" onclick="launchApp('find-location')"><div class="feat-icon">&#128269;</div><div class="feat-title">Find My Unit</div><div class="feat-desc">Search by city or ZIP to locate your hunting unit</div></div>
+    <div class="feat" onclick="triggerArrowHit(this);launchApp('pick-state')"><div class="feat-icon">&#128506;</div><div class="feat-title">By State</div><div class="feat-desc">Pick a state then drill into your Wildlife Management Unit</div></div>
+    <div class="feat" onclick="triggerArrowHit(this);launchApp('browse-species')"><div class="feat-icon">&#129420;</div><div class="feat-title">By Species</div><div class="feat-desc">Browse deer, turkey, waterfowl &amp; more across all states</div></div>
+    <div class="feat" onclick="triggerArrowHit(this);launchApp('trip')"><div class="feat-icon">&#128197;</div><div class="feat-title">Trip Planner</div><div class="feat-desc">Pick a future date to see what seasons will be open</div></div>
+    <div class="feat" onclick="triggerArrowHit(this);launchApp('find-location')"><div class="feat-icon">&#128269;</div><div class="feat-title">Find My Unit</div><div class="feat-desc">Search by city or ZIP to locate your hunting unit</div></div>
   </div>
   <div class="divider"></div>
   <p class="states-label">Available States</p>
@@ -72,6 +126,22 @@
 <div id="app-loading"><div class="spinner"></div><p class="loading-text">Loading season data&hellip;</p></div>
 <div id="app-shell"><div id="root"></div></div>
 <script>
+
+function triggerArrowHit(el) {
+  if (!el) return;
+  var rect = el.getBoundingClientRect();
+  var arrow = document.createElement('div');
+  arrow.className = 'arrow-overlay';
+  arrow.textContent = '🏹';
+  arrow.style.top = (rect.top + rect.height/2 - 14) + 'px';
+  arrow.style.left = (rect.left - 10) + 'px';
+  document.body.appendChild(arrow);
+  el.classList.add('arrow-hit');
+  setTimeout(function() {
+    arrow.remove();
+    el.classList.remove('arrow-hit');
+  }, 500);
+}
 var _pendingScreen = null;
 var _mounted = false;
 
@@ -195,7 +265,7 @@ async function fetchManifest() {
     return _manifestCache;
 }
 // allStates loaded at runtime from manifest
-const catColors = { "Big Game": "#c0392b", "Turkey": "#c4a030", "Waterfowl": "#1a6b8a", "Upland Bird": "#5a7a2e", "Small Game": "#b08040", "Feral Species": "#9a70b0", "Predator & Non-Game": "#a09050" };
+const catColors = { "Big Game": "#c0392b", "Turkey": "#e67e22", "Waterfowl": "#2980b9", "Upland Bird": "#27ae60", "Small Game": "#8e44ad", "Feral Species": "#d35400", "Predator & Non-Game": "#7f8c8d" };
 const mIcon = m => { if (!m)
     return "🎯"; const l = m.toLowerCase(); if (l.includes("archery") && (l.includes("firearm") || l.includes("crossbow")))
     return "🏹🔫"; if (l.includes("archery") || l.includes("crossbow"))
@@ -219,34 +289,34 @@ function AgencyPanel({ agency, verified }) {
                 React.createElement("span", { style: { fontSize: 14 } }, "\uD83C\uDFDB\uFE0F"),
                 React.createElement("div", null,
                     React.createElement("p", { style: { color: "#4a8a2a", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", fontFamily: "serif" } }, "Official Agency"),
-                    React.createElement("p", { style: { color: "#7ab060", fontSize: 12, fontWeight: 700 } }, agency.shortName))),
+                    React.createElement("p", { style: { color: "#27ae60", fontSize: 12, fontWeight: 700 } }, agency.shortName))),
             verified && React.createElement("span", { style: { background: "rgba(74,138,42,.15)", border: "1px solid #2a5a14", borderRadius: 6, color: "#5a9a3a", fontSize: 11, padding: "2px 8px" } }, "\u2713 Verified")),
         React.createElement("div", { style: { padding: "10px 14px" } },
-            React.createElement("p", { style: { color: "#7aaa60", fontSize: 11, marginBottom: 8 } }, agency.name),
-            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 } }, links.map(({ l, u }) => (React.createElement("a", { key: l, href: u, target: "_blank", rel: "noopener noreferrer", style: { display: "inline-flex", alignItems: "center", gap: 4, fontSize: 12, padding: "5px 10px", background: "rgba(74,138,42,.1)", border: "1px solid #1e4010", borderRadius: 8, color: "#8acc6a", textDecoration: "none" } },
+            React.createElement("p", { style: { color: "#27ae60", fontSize: 11, marginBottom: 8 } }, agency.name),
+            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 } }, links.map(({ l, u }) => (React.createElement("a", { key: l, href: u, target: "_blank", rel: "noopener noreferrer", style: { display: "inline-flex", alignItems: "center", gap: 4, fontSize: 12, padding: "5px 10px", background: "rgba(74,138,42,.1)", border: "1px solid #1e4010", borderRadius: 8, color: "#2ecc71", textDecoration: "none" } },
                 l,
                 " ",
                 React.createElement("span", { style: { fontSize: 10 } }, "\u2197"))))),
             agency.licenses && (React.createElement("div", null,
                 React.createElement("button", { onClick: () => setShowFees(f => !f), style: { display: "flex", alignItems: "center", gap: 6, background: "rgba(180,130,60,.08)", border: "1px solid #2e1a0a", borderRadius: 8, padding: "7px 12px", cursor: "pointer", width: "100%", textAlign: "left", marginBottom: showFees ? 8 : 0 } },
                     React.createElement("span", null, "\uD83D\uDCB0"),
-                    React.createElement("span", { style: { color: "#b4823a", fontSize: 12, fontWeight: 700, flex: 1 } }, "License & Tag Fees"),
-                    React.createElement("span", { style: { color: "#b89a78" } }, showFees ? "▲" : "▼")),
+                    React.createElement("span", { style: { color: "#c0392b", fontSize: 12, fontWeight: 700, flex: 1 } }, "License & Tag Fees"),
+                    React.createElement("span", { style: { color: "#777777" } }, showFees ? "▲" : "▼")),
                 showFees && (React.createElement("div", { style: { background: "#0e1208", borderRadius: 10, overflow: "hidden", border: "1px solid #1a2a10" } },
                     agency.feesNote && React.createElement("p", { style: { color: "#4a5a30", fontSize: 11, padding: "7px 10px", borderBottom: "1px solid #1a2a10", lineHeight: 1.5 } }, agency.feesNote),
                     React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 72px 72px" } },
                         ["License / Permit", "Resident", "Non-Res."].map(h => (React.createElement("div", { key: h, style: { padding: "5px 8px", background: "#0a1206", borderBottom: "1px solid #1a2a10" } },
-                            React.createElement("p", { style: { color: "#7aaa60", fontSize: 10, letterSpacing: 1, textTransform: "uppercase" } }, h)))),
+                            React.createElement("p", { style: { color: "#27ae60", fontSize: 10, letterSpacing: 1, textTransform: "uppercase" } }, h)))),
                         agency.licenses.map((lic, i) => [
                             React.createElement("div", { key: i + "n", style: { padding: "6px 8px", borderBottom: "1px solid #141e0a", display: "flex", alignItems: "center" } },
-                                React.createElement("p", { style: { color: "#aac888", fontSize: 12, lineHeight: 1.3 } }, lic.name)),
+                                React.createElement("p", { style: { color: "#82c87a", fontSize: 12, lineHeight: 1.3 } }, lic.name)),
                             React.createElement("div", { key: i + "r", style: { padding: "6px 8px", borderBottom: "1px solid #141e0a", display: "flex", alignItems: "center", justifyContent: "center" } },
-                                React.createElement("p", { style: { color: lic.resident ? "#c4943a" : "#3a4a28", fontSize: 12, fontWeight: 700 } }, lic.resident || "—")),
+                                React.createElement("p", { style: { color: lic.resident ? "#c0392b" : "#3a4a28", fontSize: 12, fontWeight: 700 } }, lic.resident || "—")),
                             React.createElement("div", { key: i + "nr", style: { padding: "6px 8px", borderBottom: "1px solid #141e0a", display: "flex", alignItems: "center", justifyContent: "center" } },
-                                React.createElement("p", { style: { color: lic.nonresident ? "#c4943a" : "#3a4a28", fontSize: 12, fontWeight: 700 } }, lic.nonresident || "—")),
+                                React.createElement("p", { style: { color: lic.nonresident ? "#c0392b" : "#3a4a28", fontSize: 12, fontWeight: 700 } }, lic.nonresident || "—")),
                         ])),
                     React.createElement("p", { style: { color: "#2a3a1a", fontSize: 10, padding: "6px 8px", lineHeight: 1.5 } }, "\u26A0\uFE0F Fees approximate for 2025\u201326. Always verify current prices before purchasing."))))),
-            agency.phone && React.createElement("p", { style: { color: "#7aaa60", fontSize: 11, marginTop: 8 } },
+            agency.phone && React.createElement("p", { style: { color: "#27ae60", fontSize: 11, marginTop: 8 } },
                 "\uD83D\uDCDE ",
                 agency.phone))));
 }
@@ -270,28 +340,28 @@ function TripPicker({ tripDate, setTripDate, isTripMode, liveNow }) {
     const qp = days => { const d = new Date(liveNow); d.setDate(d.getDate() + days); setTripDate(d); setOpen(false); };
     const qs = date => { setTripDate(date); setOpen(false); };
     return (React.createElement("div", { style: { position: "relative", marginBottom: 12 } },
-        React.createElement("button", { onClick: () => setOpen(o => !o), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 14px", background: isTripMode ? (isPast ? "rgba(160,100,200,.1)" : "rgba(90,160,200,.1)") : "rgba(180,130,60,.07)", border: `1.5px solid ${isTripMode ? (isPast ? "#4a1a70" : "#1a5070") : "#5a3818"}`, borderRadius: 14, width: "100%", cursor: "pointer", textAlign: "left" } },
+        React.createElement("button", { onClick: () => setOpen(o => !o), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 14px", background: isTripMode ? (isPast ? "rgba(160,100,200,.1)" : "rgba(90,160,200,.1)") : "rgba(180,130,60,.07)", border: `1.5px solid ${isTripMode ? (isPast ? "#4a1a70" : "#1a5070") : "#cccccc"}`, borderRadius: 14, width: "100%", cursor: "pointer", textAlign: "left" } },
             React.createElement("span", { style: { fontSize: 18 } }, isPast ? "📜" : "🗓️"),
             React.createElement("div", { style: { flex: 1 } },
-                React.createElement("p", { style: { color: isTripMode ? (isPast ? "#8a4aaa" : "#3a8aaa") : "#c4a878", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 2 } }, isTripMode ? (isPast ? "Past Date" : "Trip Planned") : "Check Any Date"),
-                React.createElement("p", { style: { color: isTripMode ? (isPast ? "#c890f0" : "#7ac8f0") : "#b4823a", fontSize: 13, fontWeight: 700 } }, isTripMode ? fmtDate(tripDate) : "Pick a date to see what's open")),
+                React.createElement("p", { style: { color: isTripMode ? (isPast ? "#8a4aaa" : "#3a8aaa") : "#888888", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 2 } }, isTripMode ? (isPast ? "Past Date" : "Trip Planned") : "Check Any Date"),
+                React.createElement("p", { style: { color: isTripMode ? (isPast ? "#c890f0" : "#7ac8f0") : "#c0392b", fontSize: 13, fontWeight: 700 } }, isTripMode ? fmtDate(tripDate) : "Pick a date to see what's open")),
             isTripMode
                 ? React.createElement("span", { onClick: e => { e.stopPropagation(); setTripDate(null); }, style: { fontSize: 12, padding: "4px 10px", background: isPast ? "rgba(160,100,200,.15)" : "rgba(90,160,200,.15)", border: `1px solid ${isPast ? "#4a1a70" : "#1a5070"}`, borderRadius: 8, color: isPast ? "#aa70e0" : "#4a9aba", cursor: "pointer" } }, "\u2715 Today")
-                : React.createElement("span", { style: { color: "#aa9080", fontSize: 16 } }, "\u203A")),
-        open && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, background: "#2c2010", border: "1px solid #3a2010", borderRadius: 14, padding: "14px", zIndex: 60, boxShadow: "0 12px 40px rgba(0,0,0,.7)" } },
-            React.createElement("p", { style: { color: "#c4a878", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } }, "Select Any Date"),
-            React.createElement("input", { type: "date", min: minISO, max: maxISO, value: valueISO, onChange: pick, onBlur: pick, style: { width: "100%", padding: "12px 14px", background: "#2a1808", border: "1px solid #3a2010", borderRadius: 10, color: "#d4b87a", fontSize: 16, cursor: "pointer", marginBottom: 10, boxSizing: "border-box" } }),
-            React.createElement("p", { style: { color: "#aa9080", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 6 } }, "Past Dates"),
+                : React.createElement("span", { style: { color: "#888888", fontSize: 16 } }, "\u203A")),
+        open && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, background: "#ffffff", border: "1px solid #e0d8d0", borderRadius: 14, padding: "14px", zIndex: 60, boxShadow: "0 12px 40px rgba(0,0,0,.7)" } },
+            React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } }, "Select Any Date"),
+            React.createElement("input", { type: "date", min: minISO, max: maxISO, value: valueISO, onChange: pick, onBlur: pick, style: { width: "100%", padding: "12px 14px", background: "#2a1808", border: "1px solid #e0d8d0", borderRadius: 10, color: "#2a2a2a", fontSize: 16, cursor: "pointer", marginBottom: 10, boxSizing: "border-box" } }),
+            React.createElement("p", { style: { color: "#888888", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 6 } }, "Past Dates"),
             React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 10 } }, [["Fall 2025 Opener", new Date(2025, 9, 1)], ["Nov 2025", new Date(2025, 10, 15)], ["Dec 2025", new Date(2025, 11, 1)], ["Jan 2025", new Date(2025, 0, 15)]].map(([lb, date]) => (React.createElement("button", { key: lb, onClick: () => qs(date), style: { padding: "7px 9px", background: "#1e1020", border: "1px solid #3a1a50", borderRadius: 8, color: "#c890f0", fontSize: 12, cursor: "pointer", textAlign: "left" } },
                 "\uD83D\uDCDC ",
                 lb,
                 React.createElement("br", null),
                 React.createElement("span", { style: { color: "#5a3a70", fontSize: 11 } }, fmtShort(date)))))),
-            React.createElement("p", { style: { color: "#aa9080", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 6 } }, "Future Dates"),
-            React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } }, [["Next Weekend", 6 - liveNow.getDay() || 7], ["In 2 Weeks", 14], ["In 1 Month", 30], ["In 3 Months", 90], ["In 6 Months", 180], ["Next Fall", Math.ceil((new Date(liveNow.getFullYear() + (liveNow.getMonth() >= 9 ? 1 : 0), 8, 15) - liveNow) / 864e5)]].map(([lb, days]) => (React.createElement("button", { key: lb, onClick: () => qp(days), style: { padding: "8px 10px", background: "#351f0c", border: "1px solid #3a2010", borderRadius: 8, color: "#b4823a", fontSize: 12, cursor: "pointer", textAlign: "left" } },
+            React.createElement("p", { style: { color: "#888888", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 6 } }, "Future Dates"),
+            React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 } }, [["Next Weekend", 6 - liveNow.getDay() || 7], ["In 2 Weeks", 14], ["In 1 Month", 30], ["In 3 Months", 90], ["In 6 Months", 180], ["Next Fall", Math.ceil((new Date(liveNow.getFullYear() + (liveNow.getMonth() >= 9 ? 1 : 0), 8, 15) - liveNow) / 864e5)]].map(([lb, days]) => (React.createElement("button", { key: lb, onClick: () => qp(days), style: { padding: "8px 10px", background: "#f0ebe4", border: "1px solid #e0d8d0", borderRadius: 8, color: "#c0392b", fontSize: 12, cursor: "pointer", textAlign: "left" } },
                 lb,
                 React.createElement("br", null),
-                React.createElement("span", { style: { color: "#b89a78", fontSize: 11 } }, fmtShort(new Date(new Date(liveNow).setDate(liveNow.getDate() + days))))))))))));
+                React.createElement("span", { style: { color: "#777777", fontSize: 11 } }, fmtShort(new Date(new Date(liveNow).setDate(liveNow.getDate() + days))))))))))));
 }
 function HuntGuide({ initialScreen } = {}) {
     const [allStates, setAllStates] = useState([]);
@@ -411,14 +481,14 @@ function HuntGuide({ initialScreen } = {}) {
     if (manifestLoading)
         return (React.createElement("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", background: "#12100d" } },
             React.createElement("div", { style: { textAlign: "center" } },
-                React.createElement("div", { style: { width: 40, height: 40, border: "3px solid #2a4a20", borderTopColor: "#7ec87a", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px" } }),
-                React.createElement("p", { style: { color: "#8acc84", fontFamily: "'Playfair Display',serif", fontSize: 14 } }, "Loading season data\u2026"))));
+                React.createElement("div", { style: { width: 40, height: 40, border: "3px solid #2a4a20", borderTopColor: "#27ae60", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px" } }),
+                React.createElement("p", { style: { color: "#2ecc71", fontFamily: "system-ui,sans-serif", fontSize: 14 } }, "Loading season data\u2026"))));
     if (manifestError)
         return (React.createElement("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", background: "#12100d" } },
             React.createElement("div", { style: { textAlign: "center", padding: 32 } },
                 React.createElement("p", { style: { color: "#c05040", fontSize: 16, marginBottom: 8 } }, "\u26A0 Could not load data"),
                 React.createElement("p", { style: { color: "#9a6050", fontSize: 12, marginBottom: 16 } }, manifestError),
-                React.createElement("button", { onClick: () => { setManifestError(null); setManifestLoading(true); fetchManifest().then(m => { setAllStates(Object.entries(m.states).map(([c, s]) => (Object.assign({ code: c }, s))).sort((a, b) => a.name.localeCompare(b.name))); setManifestLoading(false); }).catch(e => { setManifestError(e.message); setManifestLoading(false); }); }, style: { padding: "10px 20px", background: "#2a6a24", border: "none", borderRadius: 10, color: "#c8f0c4", cursor: "pointer", fontSize: 13 } }, "Retry"))));
+                React.createElement("button", { onClick: () => { setManifestError(null); setManifestLoading(true); fetchManifest().then(m => { setAllStates(Object.entries(m.states).map(([c, s]) => (Object.assign({ code: c }, s))).sort((a, b) => a.name.localeCompare(b.name))); setManifestLoading(false); }).catch(e => { setManifestError(e.message); setManifestLoading(false); }); }, style: { padding: "10px 20px", background: "#2a6a24", border: "none", borderRadius: 10, color: "#d5f5e3", cursor: "pointer", fontSize: 13 } }, "Retry"))));
     return (React.createElement("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", background: "#12100d", fontFamily: "system-ui,sans-serif" } },
         React.createElement("style", null, `
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&display=swap');
@@ -438,14 +508,14 @@ function HuntGuide({ initialScreen } = {}) {
         @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         a{text-decoration:none;}
       `),
-        React.createElement("div", { className: "phone", style: { width: 390, height: 844, background: "#2a1c0c", borderRadius: 50, boxShadow: "0 0 0 10px #0a0806,0 40px 80px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04)", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" } },
-            React.createElement("div", { style: { height: 44, background: "#110d06", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", flexShrink: 0 } },
-                React.createElement("span", { style: { color: "#c4943a", fontSize: 12, fontFamily: "'Source Serif 4',serif" } }, liveNow.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })),
+        React.createElement("div", { className: "phone", style: { width: 390, height: 844, background: "#f0ebe4", borderRadius: 50, boxShadow: "0 0 0 10px #0a0806,0 40px 80px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04)", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" } },
+            React.createElement("div", { style: { height: 44, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", flexShrink: 0 } },
+                React.createElement("span", { style: { color: "#c0392b", fontSize: 12, fontFamily: "system-ui,sans-serif" } }, liveNow.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })),
                 React.createElement("div", { style: { width: 120, height: 28, background: "#0a0806", borderRadius: 14, position: "absolute", left: "50%", transform: "translateX(-50%)" } }),
                 React.createElement("div", { style: { display: "flex", gap: 5, alignItems: "center" } },
-                    [0, 1, 2].map(i => React.createElement("div", { key: i, style: { width: 3, height: 4 + i * 2, background: "#c4943a", borderRadius: 1 } })),
+                    [0, 1, 2].map(i => React.createElement("div", { key: i, style: { width: 3, height: 4 + i * 2, background: "#c0392b", borderRadius: 1 } })),
                     React.createElement("div", { style: { width: 14, height: 7, border: "1px solid #c4943a", borderRadius: 2, marginLeft: 4, position: "relative" } },
-                        React.createElement("div", { style: { position: "absolute", inset: 1, right: 3, background: "#c4943a", borderRadius: 1 } })))),
+                        React.createElement("div", { style: { position: "absolute", inset: 1, right: 3, background: "#c0392b", borderRadius: 1 } })))),
             isTripMode && (() => {
                 const isPast = tripDate < new Date(new Date().setHours(0, 0, 0, 0));
                 return (React.createElement("div", { className: "htrip", style: { background: isPast ? "linear-gradient(90deg,#1a0e30,#100820)" : "linear-gradient(90deg,#0e2030,#0a1a28)", borderBottom: `1px solid ${isPast ? "#3a1a60" : "#1a4060"}`, padding: "7px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 } },
@@ -458,12 +528,12 @@ function HuntGuide({ initialScreen } = {}) {
             })(),
             (stateLoading || stateError) && (React.createElement("div", { style: { position: "absolute", inset: 0, background: "rgba(18,16,13,.88)", zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 44 } },
                 stateLoading && React.createElement("div", { style: { textAlign: "center" } },
-                    React.createElement("div", { style: { width: 36, height: 36, border: "3px solid #2a4a20", borderTopColor: "#7ec87a", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 12px" } }),
-                    React.createElement("p", { style: { color: "#7ec87a", fontFamily: "'Playfair Display',serif", fontSize: 13 } }, "Loading\u2026")),
+                    React.createElement("div", { style: { width: 36, height: 36, border: "3px solid #2a4a20", borderTopColor: "#27ae60", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 12px" } }),
+                    React.createElement("p", { style: { color: "#27ae60", fontFamily: "system-ui,sans-serif", fontSize: 13 } }, "Loading\u2026")),
                 stateError && React.createElement("div", { style: { textAlign: "center", padding: 24 } },
                     React.createElement("p", { style: { color: "#c05040", fontSize: 14, marginBottom: 8 } }, "Failed to load state"),
                     React.createElement("p", { style: { color: "#9a6050", fontSize: 12, marginBottom: 16 } }, stateError),
-                    React.createElement("button", { onClick: () => setStateError(null), style: { padding: "8px 18px", background: "#2a2a18", border: "1px solid #3a3a20", borderRadius: 10, color: "#dcd080", cursor: "pointer", fontSize: 13 } }, "Dismiss")))),
+                    React.createElement("button", { onClick: () => setStateError(null), style: { padding: "8px 18px", background: "#2a2a18", border: "1px solid #3a3a20", borderRadius: 10, color: "#e67e22", cursor: "pointer", fontSize: 13 } }, "Dismiss")))),
             React.createElement("div", { style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
                 screen === "home" && React.createElement(HomeScr, Object.assign({ allStates: allStates, detectLoc: detectLoc, locLoading: locLoading, locError: locError, setScreen: setScreen, setSelState: setSelState, setSelUnit: setSelUnit, onSelectSpeciesBrowse: async () => {
             setScreen("browse-species");
@@ -478,25 +548,25 @@ function HuntGuide({ initialScreen } = {}) {
                 screen === "pick-state" && React.createElement(StateScr, { allStates: allStates, onSelect: c => { selectState(c); setSelUnit(null); setScreen("pick-unit"); }, onBack: goHome }),
                 screen === "pick-unit" && curState && React.createElement(UnitScr, Object.assign({ state: curState, checkDate: checkDate, onSelect: u => { setSelUnit(u); setScreen("species"); }, onBack: () => setScreen("pick-state"), detectLoc: detectLoc, locLoading: locLoading, onFindLocation: () => setScreen("find-location") }, tp)),
                 screen === "species" && curUnit && React.createElement(SpeciesScr, Object.assign({ unit: curUnit, stateName: curState.name, stateCode: selState, agency: curState.agency, verified: curState.verified, allStates: allStates, filtered: filtered, catFilter: catFilter, setCatFilter: setCatFilter, statusFilter: statusFilter, setStatusFilter: setStatusFilter, search: search, setSearch: setSearch, setSel: setSelSpecies, onBack: () => { if (curState && curState.units && curState.units.length > 0) { setSelUnit(null); setScreen("pick-unit"); } else { goHome(); } }, onHome: goHome, onSwitchState: async c => { setSelUnit(null); if (c === selState) { setScreen("pick-unit"); } else { selectState(c); await fetchState(c).catch(()=>{}); setScreen("pick-unit"); } }, onSwitchUnit: u => { setSelUnit(u); } }, tp))),
-            React.createElement("div", { style: { height: 34, background: "#110d06", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
-                React.createElement("div", { style: { width: 130, height: 5, background: "#2e2010", borderRadius: 3 } })),
+            React.createElement("div", { style: { height: 34, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
+                React.createElement("div", { style: { width: 130, height: 5, background: "#f5f0eb", borderRadius: 3 } })),
             enrichedSel && (React.createElement("div", { className: "hmbg", onClick: () => setSelSpecies(null), style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.82)", display: "flex", alignItems: "flex-end", zIndex: 99 } },
-                React.createElement("div", { className: "hmsh", onClick: e => e.stopPropagation(), style: { background: "#2c2010", borderRadius: "28px 28px 0 0", padding: "0 0 44px", width: "100%", borderTop: "1px solid #3a2510", maxHeight: "88%", display: "flex", flexDirection: "column" } },
+                React.createElement("div", { className: "hmsh", onClick: e => e.stopPropagation(), style: { background: "#ffffff", borderRadius: "28px 28px 0 0", padding: "0 0 44px", width: "100%", borderTop: "1px solid #e0d8d0", maxHeight: "88%", display: "flex", flexDirection: "column" } },
                     React.createElement("div", { style: { padding: "12px 20px 0", flexShrink: 0 } },
                         React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 } },
-                            React.createElement("div", { style: { width: 36, height: 4, background: "#5a3818", borderRadius: 2, margin: "8px auto 0" } }),
-                            React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#c4a888", fontSize: 22, cursor: "pointer", lineHeight: 1, padding: "0 4px" } }, "\u00D7")),
+                            React.createElement("div", { style: { width: 36, height: 4, background: "#cccccc", borderRadius: 2, margin: "8px auto 0" } }),
+                            React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#888888", fontSize: 22, cursor: "pointer", lineHeight: 1, padding: "0 4px" } }, "\u00D7")),
                         React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 10 } },
-                            React.createElement("div", { style: { width: 52, height: 52, background: "#351f0c", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, flexShrink: 0 } }, enrichedSel.icon),
+                            React.createElement("div", { style: { width: 52, height: 52, background: "#f0ebe4", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, flexShrink: 0 } }, enrichedSel.icon),
                             React.createElement("div", null,
-                                React.createElement("h2", { style: { fontFamily: "'Playfair Display',serif", color: "#e8c87a", fontSize: 19, fontWeight: 700, lineHeight: 1.2, marginBottom: 4 } }, enrichedSel.name),
+                                React.createElement("h2", { style: { fontFamily: "system-ui,sans-serif", color: "#1a1a1a", fontSize: 19, fontWeight: 700, lineHeight: 1.2, marginBottom: 4 } }, enrichedSel.name),
                                 React.createElement("span", { style: { fontSize: 11, padding: "2px 8px", borderRadius: 10, background: `${catColors[enrichedSel.category] || "#8a7060"}20`, color: catColors[enrichedSel.category] || "#8a7060", letterSpacing: 1.5, textTransform: "uppercase", border: `1px solid ${catColors[enrichedSel.category] || "#8a7060"}40` } }, enrichedSel.category))),
                         isTripMode && React.createElement("div", { style: { background: "rgba(90,160,200,.08)", border: "1px solid #1a4060", borderRadius: 8, padding: "6px 12px", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 } },
                             React.createElement("span", null, "\uD83D\uDDD3\uFE0F"),
                             React.createElement("p", { style: { color: "#5a9aba", fontSize: 12 } },
                                 "Status for ",
                                 React.createElement("strong", null, fmtDate(tripDate)))),
-                        React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } }, "Seasons by Method")),
+                        React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } }, "Seasons by Method")),
                     React.createElement("div", { style: { overflow: "auto", padding: "0 20px" } },
                         enrichedSel.seasons.map((se, i) => {
                             const nxt = !se.isOpen ? nextOpenDate(se.ranges, checkDate) : null;
@@ -504,31 +574,31 @@ function HuntGuide({ initialScreen } = {}) {
                                 React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7 } },
                                     React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 } },
                                         React.createElement("span", { style: { fontSize: 14 } }, mIcon(se.method)),
-                                        React.createElement("span", { style: { color: "#d4b878", fontSize: 13, fontFamily: "'Playfair Display',serif", fontWeight: 700 } }, se.method)),
-                                    React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: se.isOpen ? "#8acc6a" : "#7a4a3a" } },
+                                        React.createElement("span", { style: { color: "#2a2a2a", fontSize: 13, fontFamily: "system-ui,sans-serif", fontWeight: 700 } }, se.method)),
+                                    React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: se.isOpen ? "#2ecc71" : "#7a4a3a" } },
                                         React.createElement("span", { style: { width: 7, height: 7, borderRadius: "50%", background: se.isOpen ? "#5aaa3a" : "#7a3030", boxShadow: se.isOpen ? "0 0 6px rgba(90,170,58,.55)" : "none", display: "inline-block" } }),
                                         se.isOpen ? (isTripMode ? "Open on Trip" : "Open Now") : "Closed")),
                                 React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: nxt ? 8 : 0 } }, [["📅 Dates", se.dates], ["🎒 Bag Limit", se.bag]].map(([l, v]) => (React.createElement("div", { key: l },
-                                    React.createElement("p", { style: { color: "#aa9080", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 2 } }, l),
-                                    React.createElement("p", { style: { color: "#d4b87a", fontSize: 12, lineHeight: 1.4 } }, v))))),
+                                    React.createElement("p", { style: { color: "#888888", fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 2 } }, l),
+                                    React.createElement("p", { style: { color: "#2a2a2a", fontSize: 12, lineHeight: 1.4 } }, v))))),
                                 nxt && React.createElement("div", { style: { background: "rgba(180,130,50,.08)", borderRadius: 8, padding: "6px 10px", display: "flex", alignItems: "center", gap: 6 } },
                                     React.createElement("span", { style: { fontSize: 12 } }, "\u23F3"),
                                     React.createElement("p", { style: { color: "#8a6830", fontSize: 12 } },
                                         "Opens in ",
-                                        React.createElement("strong", { style: { color: "#c4943a" } },
+                                        React.createElement("strong", { style: { color: "#c0392b" } },
                                             nxt.daysAway,
                                             "d"),
                                         " \u00B7 ",
                                         nxt.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })))));
                         }),
                         (curState === null || curState === void 0 ? void 0 : curState.agency) && (React.createElement("div", { style: { background: "#111a0a", border: "1px solid #1e3010", borderRadius: 12, padding: "10px 12px", marginTop: 4 } },
-                            React.createElement("p", { style: { color: "#7aaa60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 7 } },
+                            React.createElement("p", { style: { color: "#27ae60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 7 } },
                                 "Verify with ",
                                 curState.agency.shortName),
-                            React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" } }, [["📅 Seasons", curState.agency.seasonsUrl], ["📋 Regs", curState.agency.regulationsUrl], ["🪪 License", curState.agency.licenseUrl]].map(([l, u]) => (React.createElement("a", { key: l, href: u, target: "_blank", rel: "noopener noreferrer", style: { fontSize: 12, padding: "5px 10px", background: "rgba(74,138,42,.1)", border: "1px solid #1e4010", borderRadius: 8, color: "#8acc6a" } },
+                            React.createElement("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" } }, [["📅 Seasons", curState.agency.seasonsUrl], ["📋 Regs", curState.agency.regulationsUrl], ["🪪 License", curState.agency.licenseUrl]].map(([l, u]) => (React.createElement("a", { key: l, href: u, target: "_blank", rel: "noopener noreferrer", style: { fontSize: 12, padding: "5px 10px", background: "rgba(74,138,42,.1)", border: "1px solid #1e4010", borderRadius: 8, color: "#2ecc71" } },
                                 l,
                                 " \u2197")))))),
-                        React.createElement("p", { style: { color: "#5a3818", fontSize: 11, textAlign: "center", marginTop: 10, lineHeight: 1.7 } }, "Always verify with your state wildlife agency before hunting."))))))));
+                        React.createElement("p", { style: { color: "#cccccc", fontSize: 11, textAlign: "center", marginTop: 10, lineHeight: 1.7 } }, "Always verify with your state wildlife agency before hunting."))))))));
 }
 // ─── SPECIES INDEX (rebuilt from cached states) ───────────────────────────
 function buildSpeciesIndex() {
@@ -559,16 +629,16 @@ function SpeciesBrowseScr({ onBack, checkDate, isTripMode, onSelectUnit, tripDat
         const openHits = hits.filter(h => h.seasons.some(se => se.isOpen));
         const closedHits = hits.filter(h => !h.seasons.some(se => se.isOpen));
         return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 8 } },
-                    React.createElement("button", { onClick: () => setSelStateCode(null), style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
-                    React.createElement("button", { onClick: () => { setSelSpecies(null); setSelStateCode(null); }, style: { background: "rgba(180,130,60,.08)", border: "1px solid #3a2010", borderRadius: 20, padding: "3px 10px", color: "#d4b878", fontSize: 12, cursor: "pointer" } },
+                    React.createElement("button", { onClick: () => setSelStateCode(null), style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
+                    React.createElement("button", { onClick: () => { setSelSpecies(null); setSelStateCode(null); }, style: { background: "rgba(180,130,60,.08)", border: "1px solid #e0d8d0", borderRadius: 20, padding: "3px 10px", color: "#2a2a2a", fontSize: 12, cursor: "pointer" } },
                         selSpecies.icon,
                         " ",
                         selSpecies.name),
-                    React.createElement("span", { style: { color: "#5a3818" } }, "\u203A"),
-                    React.createElement("span", { style: { background: "rgba(180,130,60,.14)", border: "1px solid #4a2a10", borderRadius: 20, padding: "3px 10px", color: "#e8c87a", fontSize: 12, fontWeight: 700 } }, selStateCode)),
-                React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
+                    React.createElement("span", { style: { color: "#cccccc" } }, "\u203A"),
+                    React.createElement("span", { style: { background: "rgba(180,130,60,.14)", border: "1px solid #4a2a10", borderRadius: 20, padding: "3px 10px", color: "#1a1a1a", fontSize: 12, fontWeight: 700 } }, selStateCode)),
+                React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
                     st.name,
                     " \u00B7 ",
                     hits.length,
@@ -580,37 +650,37 @@ function SpeciesBrowseScr({ onBack, checkDate, isTripMode, onSelectUnit, tripDat
                     isTripMode ? "on trip" : "now")),
             React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "10px 20px" } },
                 openHits.length > 0 && React.createElement(React.Fragment, null,
-                    React.createElement("p", { style: { color: "#7aaa60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } },
+                    React.createElement("p", { style: { color: "#27ae60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } },
                         "Open ",
                         isTripMode ? ("on " + fmtShort(tripDate)) : "Now"),
-                    openHits.map((h, i) => (React.createElement("div", { key: i, className: "hucard", onClick: () => onSelectUnit(h.stateCode, h.unitId), style: { background: "#223018", border: "1px solid #2a4018", borderRadius: 13, padding: "11px 14px", marginBottom: 7 } },
+                    openHits.map((h, i) => (React.createElement("div", { key: i, className: "hucard", onClick: (e) => { triggerArrowHit(e.currentTarget); onSelectUnit(h.stateCode, h.unitId); }, style: { background: "#f0f9ee", border: "1px solid #2a4018", borderRadius: 13, padding: "11px 14px", marginBottom: 7 } },
                         React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 } },
-                            React.createElement("p", { style: { color: "#7ab060", fontSize: 14, fontWeight: 700 } },
+                            React.createElement("p", { style: { color: "#27ae60", fontSize: 14, fontWeight: 700 } },
                                 h.unitId,
                                 " ",
-                                React.createElement("span", { style: { color: "#8aba70", fontSize: 12, fontWeight: 400 } },
+                                React.createElement("span", { style: { color: "#2ecc71", fontSize: 12, fontWeight: 400 } },
                                     "\u00B7 ",
                                     h.unitRegion)),
-                            React.createElement("span", { style: { color: "#7aaa60", fontSize: 16 } }, "\u203A")),
+                            React.createElement("span", { style: { color: "#27ae60", fontSize: 16 } }, "\u203A")),
                         h.seasons.filter(se => se.isOpen).map((se, j) => (React.createElement("div", { key: j, style: { display: "flex", alignItems: "center", gap: 7, marginBottom: 3 } },
                             React.createElement("span", { style: { fontSize: 12 } }, mIcon(se.method)),
-                            React.createElement("span", { style: { color: "#aac888", fontSize: 12 } }, se.method),
-                            React.createElement("span", { style: { color: "#7aaa60", fontSize: 11, marginLeft: "auto" } }, se.bag)))))))),
+                            React.createElement("span", { style: { color: "#82c87a", fontSize: 12 } }, se.method),
+                            React.createElement("span", { style: { color: "#27ae60", fontSize: 11, marginLeft: "auto" } }, se.bag)))))))),
                 closedHits.length > 0 && React.createElement(React.Fragment, null,
-                    React.createElement("p", { style: { color: "#aa9080", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8, marginTop: openHits.length > 0 ? 14 : 0 } }, "Closed"),
+                    React.createElement("p", { style: { color: "#888888", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8, marginTop: openHits.length > 0 ? 14 : 0 } }, "Closed"),
                     closedHits.map((h, i) => {
                         const upcoming = h.seasons.reduce((b, se) => { const n = nextOpenDate(se.ranges, checkDate); if (!n)
                             return b; if (!b || n.daysAway < b.daysAway)
                             return n; return b; }, null);
-                        return (React.createElement("div", { key: i, className: "hucard", onClick: () => onSelectUnit(h.stateCode, h.unitId), style: { background: "#2c2010", border: "1px solid #2a1608", borderRadius: 13, padding: "11px 14px", marginBottom: 7, opacity: .8 } },
+                        return (React.createElement("div", { key: i, className: "hucard", onClick: (e) => { triggerArrowHit(e.currentTarget); onSelectUnit(h.stateCode, h.unitId); }, style: { background: "#ffffff", border: "1px solid #2a1608", borderRadius: 13, padding: "11px 14px", marginBottom: 7, opacity: .8 } },
                             React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
-                                React.createElement("p", { style: { color: "#d4b878", fontSize: 14, fontWeight: 700 } },
+                                React.createElement("p", { style: { color: "#2a2a2a", fontSize: 14, fontWeight: 700 } },
                                     h.unitId,
                                     " ",
-                                    React.createElement("span", { style: { color: "#aa9080", fontSize: 12, fontWeight: 400 } },
+                                    React.createElement("span", { style: { color: "#888888", fontSize: 12, fontWeight: 400 } },
                                         "\u00B7 ",
                                         h.unitRegion)),
-                                upcoming && React.createElement("p", { style: { color: "#c4a878", fontSize: 11, flexShrink: 0 } },
+                                upcoming && React.createElement("p", { style: { color: "#888888", fontSize: 11, flexShrink: 0 } },
                                     "\u231B ",
                                     upcoming.daysAway,
                                     "d"))));
@@ -631,13 +701,13 @@ function SpeciesBrowseScr({ onBack, checkDate, isTripMode, onSelectUnit, tripDat
             .sort((a, b) => b.openUnits - a.openUnits || a.stateName.localeCompare(b.stateName));
         const totalOpen = byState.reduce((s, st) => s + st.openUnits, 0);
         return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 } },
-                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
+                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
                     React.createElement("span", { style: { fontSize: 24 } }, selSpecies.icon),
                     React.createElement("div", null,
-                        React.createElement("h2", { style: { color: "#e8c87a", fontSize: 17, fontWeight: 700, fontFamily: "'Playfair Display',serif" } }, selSpecies.name),
-                        React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
+                        React.createElement("h2", { style: { color: "#1a1a1a", fontSize: 17, fontWeight: 700, fontFamily: "system-ui,sans-serif" } }, selSpecies.name),
+                        React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
                             totalOpen,
                             " unit",
                             totalOpen !== 1 ? "s" : "",
@@ -661,24 +731,24 @@ function SpeciesBrowseScr({ onBack, checkDate, isTripMode, onSelectUnit, tripDat
                 return (React.createElement("div", { key: code, className: "hucard", onClick: () => setSelStateCode(code), style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 14px", marginBottom: 8, background: hasOpen ? "#223018" : "#2c2010", border: ("1px solid " + (hasOpen ? "#2a4018" : "#2a1608")), borderRadius: 14, cursor: "pointer" } },
                     React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
                         React.createElement("div", { style: { width: 40, height: 40, background: hasOpen ? "#1e3010" : "#351f0c", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
-                            React.createElement("span", { style: { color: hasOpen ? "#7ab060" : "#b08050", fontSize: 13, fontWeight: 800 } }, code)),
+                            React.createElement("span", { style: { color: hasOpen ? "#27ae60" : "#b08050", fontSize: 13, fontWeight: 800 } }, code)),
                         React.createElement("div", null,
-                            React.createElement("p", { style: { color: hasOpen ? "#c4d4a0" : "#d4b878", fontSize: 14, fontWeight: 700 } }, stateName),
+                            React.createElement("p", { style: { color: hasOpen ? "#c4d4a0" : "#2a2a2a", fontSize: 14, fontWeight: 700 } }, stateName),
                             React.createElement("p", { style: { color: hasOpen ? "#5a8a4a" : "#8a7060", fontSize: 12, marginTop: 1 } }, hasOpen
                                 ? (openUnits + " of " + hits.length + " unit" + (hits.length !== 1 ? "s" : "") + " open")
                                 : allUpcoming ? ("opens in " + allUpcoming.daysAway + "d") : (hits.length + " unit" + (hits.length !== 1 ? "s" : "") + " closed")))),
-                    React.createElement("span", { style: { color: hasOpen ? "#7aaa60" : "#9a8070", fontSize: 18 } }, "\u203A")));
+                    React.createElement("span", { style: { color: hasOpen ? "#27ae60" : "#999999", fontSize: 18 } }, "\u203A")));
             }))));
     }
     // LEVEL 1: species grid
     const cats = ["Big Game", "Turkey", "Upland Bird", "Waterfowl", "Small Game", "Feral Species", "Predator & Non-Game"];
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-        React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+        React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer" } }, "\u2190"),
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer" } }, "\u2190"),
                 React.createElement("div", null,
-                    React.createElement("h2", { style: { color: "#e8c87a", fontSize: 18, fontWeight: 700, fontFamily: "'Playfair Display',serif" } }, "Browse by Species"),
-                    React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Species \u203A State \u203A Unit")))),
+                    React.createElement("h2", { style: { color: "#1a1a1a", fontSize: 18, fontWeight: 700, fontFamily: "system-ui,sans-serif" } }, "Browse by Species"),
+                    React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Species \u203A State \u203A Unit")))),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "12px 20px" } }, cats.map(cat => {
             const sps = speciesIndex.filter(s => s.category === cat);
             if (!sps.length)
@@ -689,10 +759,10 @@ function SpeciesBrowseScr({ onBack, checkDate, isTripMode, onSelectUnit, tripDat
                 React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 } }, sps.map(sp => {
                     const openStates = new Set(sp.hits.filter(h => h.seasons.some(se => isSeasonOpen(se.ranges, checkDate))).map(h => h.stateCode)).size;
                     const totalStates = new Set(sp.hits.map(h => h.stateCode)).size;
-                    return (React.createElement("button", { key: sp.name, className: "hucard", onClick: () => setSelSpecies(sp), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 12px", background: "#2c2010", border: ("1px solid " + (openStates > 0 ? "#2a4018" : "#2a1608")), borderRadius: 13, textAlign: "left", cursor: "pointer" } },
+                    return (React.createElement("button", { key: sp.name, className: "hucard", onClick: () => setSelSpecies(sp), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 12px", background: "#ffffff", border: ("1px solid " + (openStates > 0 ? "#2a4018" : "#2a1608")), borderRadius: 13, textAlign: "left", cursor: "pointer" } },
                         React.createElement("span", { style: { fontSize: 22, flexShrink: 0 } }, sp.icon),
                         React.createElement("div", { style: { minWidth: 0 } },
-                            React.createElement("p", { style: { color: "#d4b87a", fontSize: 12, fontWeight: 700, lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, sp.name),
+                            React.createElement("p", { style: { color: "#2a2a2a", fontSize: 12, fontWeight: 700, lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, sp.name),
                             React.createElement("p", { style: { color: openStates > 0 ? "#5a8a4a" : "#8a7060", fontSize: 11, marginTop: 2 } }, openStates > 0 ? (openStates + "/" + totalStates + " states open") : (totalStates + " state" + (totalStates !== 1 ? "s" : "") + " closed")))));
                 }))));
         }))));
@@ -758,44 +828,44 @@ function FindLocationScr({ onBack, resolveLatLng, setSelState, setSelUnit, setSc
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
         React.createElement("div", { style: { padding: "16px 20px 14px", background: "#1b2619", borderBottom: "1px solid #1a2e16", flexShrink: 0 } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 14 } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#7ec87a", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#27ae60", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
                 React.createElement("div", null,
-                    React.createElement("h2", { style: { fontFamily: "'Playfair Display',serif", color: "#b8e8b4", fontSize: 18, fontWeight: 700 } }, "Find My Unit"),
+                    React.createElement("h2", { style: { fontFamily: "system-ui,sans-serif", color: "#a8e6c0", fontSize: 18, fontWeight: 700 } }, "Find My Unit"),
                     React.createElement("p", { style: { color: "#3a5a34", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Search by city, county, or ZIP code"))),
             React.createElement("div", { style: { display: "flex", gap: 8 } },
-                React.createElement("input", { value: query, onChange: e => setQuery(e.target.value), onKeyDown: e => e.key === "Enter" && geocode(query), placeholder: "e.g. Saranac Lake, NY  or  12983", style: { flex: 1, padding: "11px 14px", background: "#223018", border: "1.5px solid #2a4a20", borderRadius: 11, color: "#c8f0c4", fontSize: 14, outline: "none" }, autoFocus: true }),
-                React.createElement("button", { onClick: () => geocode(query), disabled: status === "loading", style: { padding: "11px 18px", background: "#2a6a24", borderRadius: 11, color: "#c8f0c4", fontSize: 13, fontWeight: 700, border: "none", cursor: "pointer", minWidth: 58 } }, status === "loading" ? "..." : "Go")),
+                React.createElement("input", { value: query, onChange: e => setQuery(e.target.value), onKeyDown: e => e.key === "Enter" && geocode(query), placeholder: "e.g. Saranac Lake, NY  or  12983", style: { flex: 1, padding: "11px 14px", background: "#f0f9ee", border: "1.5px solid #2a4a20", borderRadius: 11, color: "#d5f5e3", fontSize: 14, outline: "none" }, autoFocus: true }),
+                React.createElement("button", { onClick: () => geocode(query), disabled: status === "loading", style: { padding: "11px 18px", background: "#2a6a24", borderRadius: 11, color: "#d5f5e3", fontSize: 13, fontWeight: 700, border: "none", cursor: "pointer", minWidth: 58 } }, status === "loading" ? "..." : "Go")),
             React.createElement("p", { style: { color: "#2a4a24", fontSize: 12, marginTop: 7, lineHeight: 1.5 } }, "Enter a city name, State abbreviation, or ZIP code")),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "12px 20px" } },
             status === "loading" && (React.createElement("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 0", gap: 12 } },
-                React.createElement("div", { style: { width: 32, height: 32, border: "3px solid #2a4a20", borderTopColor: "#7ec87a", borderRadius: "50%", animation: "spin 0.8s linear infinite" } }),
+                React.createElement("div", { style: { width: 32, height: 32, border: "3px solid #2a4a20", borderTopColor: "#27ae60", borderRadius: "50%", animation: "spin 0.8s linear infinite" } }),
                 React.createElement("p", { style: { color: "#4a6a44", fontSize: 13 } }, "Searching..."))),
             status === "results" && results.length > 0 && (React.createElement("div", null,
                 React.createElement("p", { style: { color: "#3a5a30", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 } }, "Select your location"),
                 results.map((r, i) => (React.createElement("button", { key: i, className: "hbtn", onClick: () => pickResult(r), style: { width: "100%", textAlign: "left", padding: "13px 15px", background: "#1e2d1a", borderRadius: 13, marginBottom: 8, border: "1px solid #1e3818", display: "block", cursor: "pointer" } },
-                    React.createElement("p", { style: { color: "#b8e8b4", fontSize: 13, fontWeight: 600, marginBottom: 2 } }, r.display),
+                    React.createElement("p", { style: { color: "#a8e6c0", fontSize: 13, fontWeight: 600, marginBottom: 2 } }, r.display),
                     React.createElement("p", { style: { color: "#3a5a30", fontSize: 12 } },
                         r.lat.toFixed(4),
                         "N, ",
                         Math.abs(r.lng).toFixed(4),
                         "W")))))),
             status === "nomatch" && (React.createElement("div", { style: { background: "#1a1a10", borderRadius: 14, padding: "22px 18px", border: "1px solid #2a2a18", marginTop: 8 } },
-                React.createElement("p", { style: { color: "#dcd080", fontSize: 16, marginBottom: 6 } }, "Location not found"),
+                React.createElement("p", { style: { color: "#e67e22", fontSize: 16, marginBottom: 6 } }, "Location not found"),
                 React.createElement("p", { style: { color: "#5a5a38", fontSize: 13, lineHeight: 1.6, marginBottom: 16 } }, "Could not find that location. Try adding a state abbreviation like Albany NY or entering a ZIP code."),
-                React.createElement("button", { onClick: goManual, style: { padding: "10px 18px", background: "#2a2a18", borderRadius: 10, color: "#dcd080", fontSize: 13, border: "1px solid #3a3a20", cursor: "pointer" } }, "Browse by State Instead"))),
-            status === "nomatch_unit" && chosen && (React.createElement("div", { style: { background: "#2a1c0c", borderRadius: 14, padding: "22px 18px", border: "1px solid #3a2a10", marginTop: 8 } },
-                React.createElement("p", { style: { color: "#e8c87a", fontSize: 15, marginBottom: 6 } }, "Location found - unit not yet mapped"),
+                React.createElement("button", { onClick: goManual, style: { padding: "10px 18px", background: "#2a2a18", borderRadius: 10, color: "#e67e22", fontSize: 13, border: "1px solid #3a3a20", cursor: "pointer" } }, "Browse by State Instead"))),
+            status === "nomatch_unit" && chosen && (React.createElement("div", { style: { background: "#f0ebe4", borderRadius: 14, padding: "22px 18px", border: "1px solid #3a2a10", marginTop: 8 } },
+                React.createElement("p", { style: { color: "#1a1a1a", fontSize: 15, marginBottom: 6 } }, "Location found - unit not yet mapped"),
                 React.createElement("p", { style: { color: "#5a4020", fontSize: 12, lineHeight: 1.6, marginBottom: 4 } }, chosen.display),
                 React.createElement("p", { style: { color: "#5a4020", fontSize: 12, lineHeight: 1.6, marginBottom: 16 } }, "This location is not in our database yet. Browse the state units manually."),
                 React.createElement("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" } },
-                    React.createElement("button", { onClick: goManual, style: { padding: "10px 16px", background: "#2a1a08", borderRadius: 10, color: "#e8c87a", fontSize: 13, border: "1px solid #4a3010", cursor: "pointer" } }, "Browse State Units"),
-                    React.createElement("button", { onClick: () => setStatus("results"), style: { padding: "10px 16px", background: "transparent", borderRadius: 10, color: "#d4b878", fontSize: 13, border: "1px solid #3a2010", cursor: "pointer" } }, "Back to results")))),
+                    React.createElement("button", { onClick: goManual, style: { padding: "10px 16px", background: "#2a1a08", borderRadius: 10, color: "#1a1a1a", fontSize: 13, border: "1px solid #4a3010", cursor: "pointer" } }, "Browse State Units"),
+                    React.createElement("button", { onClick: () => setStatus("results"), style: { padding: "10px 16px", background: "transparent", borderRadius: 10, color: "#2a2a2a", fontSize: 13, border: "1px solid #e0d8d0", cursor: "pointer" } }, "Back to results")))),
             status === "error" && (React.createElement("div", { style: { background: "rgba(160,40,20,.08)", borderRadius: 14, padding: "18px", border: "1px solid rgba(160,40,20,.2)", marginTop: 8 } },
                 React.createElement("p", { style: { color: "#c05040", fontSize: 14, marginBottom: 6 } }, "Search failed"),
                 React.createElement("p", { style: { color: "#6a3028", fontSize: 12, lineHeight: 1.5 } }, "Could not reach the geocoding service. Check your connection and try again."))),
             status === "idle" && (React.createElement("div", { style: { padding: "20px 0" } },
                 React.createElement("p", { style: { color: "#2a3a28", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 } }, "Examples"),
-                ["Saranac Lake, NY", "Big Sandy, TX", "12983", "Estes Park, CO", "Troy, AL"].map(ex => (React.createElement("button", { key: ex, className: "hbtn", onClick: () => { setQuery(ex); geocode(ex); }, style: { display: "block", width: "100%", textAlign: "left", padding: "10px 14px", background: "#1b2619", borderRadius: 10, marginBottom: 6, border: "1px solid #263616", color: "#8acc84", fontSize: 13, cursor: "pointer" } }, ex))))))));
+                ["Saranac Lake, NY", "Big Sandy, TX", "12983", "Estes Park, CO", "Troy, AL"].map(ex => (React.createElement("button", { key: ex, className: "hbtn", onClick: () => { setQuery(ex); geocode(ex); }, style: { display: "block", width: "100%", textAlign: "left", padding: "10px 14px", background: "#1b2619", borderRadius: 10, marginBottom: 6, border: "1px solid #263616", color: "#2ecc71", fontSize: 13, cursor: "pointer" } }, ex))))))));
 }
 function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSelectUnit, allStates, fetchState }) {
     const [selStateCode, setSelStateCode] = useState(null);
@@ -814,7 +884,7 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
     if (selStateCode && selSpecies) {
         const st = _cache[selStateCode];
         if (!st) return React.createElement("div", { className: "sc", style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" } },
-            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#7ec87a", animation:"spin .8s linear infinite" } }));
+            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#27ae60", animation:"spin .8s linear infinite" } }));
         const spEntry = speciesIndex.find(s => s.name === selSpecies.name);
         const hits = ((spEntry === null || spEntry === void 0 ? void 0 : spEntry.hits) || [])
             .filter(h => h.stateCode === selStateCode)
@@ -822,18 +892,18 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
         const openHits = hits.filter(h => h.seasons.some(se => se.isOpen));
         const closedHits = hits.filter(h => !h.seasons.some(se => se.isOpen));
         return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 8 } },
-                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
-                    React.createElement("button", { onClick: () => { setSelStateCode(null); setSelSpecies(null); }, style: { background: "rgba(180,130,60,.08)", border: "1px solid #3a2010", borderRadius: 20, padding: "3px 10px", color: "#d4b878", fontSize: 12, cursor: "pointer" } }, selStateCode),
-                    React.createElement("span", { style: { color: "#5a3818" } }, "\u203A"),
-                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "rgba(180,130,60,.08)", border: "1px solid #3a2010", borderRadius: 20, padding: "3px 10px", color: "#d4b878", fontSize: 12, cursor: "pointer" } },
+                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
+                    React.createElement("button", { onClick: () => { setSelStateCode(null); setSelSpecies(null); }, style: { background: "rgba(180,130,60,.08)", border: "1px solid #e0d8d0", borderRadius: 20, padding: "3px 10px", color: "#2a2a2a", fontSize: 12, cursor: "pointer" } }, selStateCode),
+                    React.createElement("span", { style: { color: "#cccccc" } }, "\u203A"),
+                    React.createElement("button", { onClick: () => setSelSpecies(null), style: { background: "rgba(180,130,60,.08)", border: "1px solid #e0d8d0", borderRadius: 20, padding: "3px 10px", color: "#2a2a2a", fontSize: 12, cursor: "pointer" } },
                         selSpecies.icon,
                         " ",
                         selSpecies.name),
-                    React.createElement("span", { style: { color: "#5a3818" } }, "\u203A"),
-                    React.createElement("span", { style: { background: "rgba(180,130,60,.14)", border: "1px solid #4a2a10", borderRadius: 20, padding: "3px 10px", color: "#e8c87a", fontSize: 12, fontWeight: 700 } }, "Units")),
-                React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
+                    React.createElement("span", { style: { color: "#cccccc" } }, "\u203A"),
+                    React.createElement("span", { style: { background: "rgba(180,130,60,.14)", border: "1px solid #4a2a10", borderRadius: 20, padding: "3px 10px", color: "#1a1a1a", fontSize: 12, fontWeight: 700 } }, "Units")),
+                React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } },
                     st.name,
                     " \u00B7 ",
                     hits.length,
@@ -845,42 +915,42 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
                     isTripMode ? "on trip" : "now")),
             React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "10px 20px" } },
                 openHits.length > 0 && React.createElement(React.Fragment, null,
-                    React.createElement("p", { style: { color: "#7aaa60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } },
+                    React.createElement("p", { style: { color: "#27ae60", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 } },
                         "Open ",
                         isTripMode ? ("on " + fmtShort(tripDate)) : "Now"),
-                    openHits.map((h, i) => (React.createElement("div", { key: i, className: "hucard", onClick: () => onSelectUnit(h.stateCode, h.unitId), style: { background: "#223018", border: "1px solid #2a4018", borderRadius: 13, padding: "11px 14px", marginBottom: 7, cursor: "pointer" } },
+                    openHits.map((h, i) => (React.createElement("div", { key: i, className: "hucard", onClick: (e) => { triggerArrowHit(e.currentTarget); onSelectUnit(h.stateCode, h.unitId); }, style: { background: "#f0f9ee", border: "1px solid #2a4018", borderRadius: 13, padding: "11px 14px", marginBottom: 7, cursor: "pointer" } },
                         React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 } },
-                            React.createElement("p", { style: { color: "#7ab060", fontSize: 14, fontWeight: 700 } },
+                            React.createElement("p", { style: { color: "#27ae60", fontSize: 14, fontWeight: 700 } },
                                 h.unitId,
                                 " ",
-                                React.createElement("span", { style: { color: "#8aba70", fontSize: 12, fontWeight: 400 } },
+                                React.createElement("span", { style: { color: "#2ecc71", fontSize: 12, fontWeight: 400 } },
                                     "\u00B7 ",
                                     h.unitRegion)),
-                            React.createElement("span", { style: { color: "#7aaa60", fontSize: 16 } }, "\u203A")),
+                            React.createElement("span", { style: { color: "#27ae60", fontSize: 16 } }, "\u203A")),
                         h.seasons.filter(se => se.isOpen).map((se, j) => (React.createElement("div", { key: j, style: { display: "flex", alignItems: "center", gap: 7, marginBottom: 3 } },
                             React.createElement("span", { style: { fontSize: 12 } }, mIcon(se.method)),
-                            React.createElement("span", { style: { color: "#aac888", fontSize: 12 } }, se.method),
-                            React.createElement("span", { style: { color: "#7aaa60", fontSize: 11, marginLeft: "auto" } }, se.bag)))))))),
+                            React.createElement("span", { style: { color: "#82c87a", fontSize: 12 } }, se.method),
+                            React.createElement("span", { style: { color: "#27ae60", fontSize: 11, marginLeft: "auto" } }, se.bag)))))))),
                 closedHits.length > 0 && React.createElement(React.Fragment, null,
-                    React.createElement("p", { style: { color: "#aa9080", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8, marginTop: openHits.length > 0 ? 14 : 0 } }, "Closed"),
+                    React.createElement("p", { style: { color: "#888888", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8, marginTop: openHits.length > 0 ? 14 : 0 } }, "Closed"),
                     closedHits.map((h, i) => {
                         const upcoming = h.seasons.reduce((b, se) => { const n = nextOpenDate(se.ranges, checkDate); if (!n)
                             return b; if (!b || n.daysAway < b.daysAway)
                             return n; return b; }, null);
-                        return (React.createElement("div", { key: i, className: "hucard", onClick: () => onSelectUnit(h.stateCode, h.unitId), style: { background: "#2c2010", border: "1px solid #2a1608", borderRadius: 13, padding: "11px 14px", marginBottom: 7, opacity: .8, cursor: "pointer" } },
+                        return (React.createElement("div", { key: i, className: "hucard", onClick: (e) => { triggerArrowHit(e.currentTarget); onSelectUnit(h.stateCode, h.unitId); }, style: { background: "#ffffff", border: "1px solid #2a1608", borderRadius: 13, padding: "11px 14px", marginBottom: 7, opacity: .8, cursor: "pointer" } },
                             React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
-                                React.createElement("p", { style: { color: "#d4b878", fontSize: 14, fontWeight: 700 } },
+                                React.createElement("p", { style: { color: "#2a2a2a", fontSize: 14, fontWeight: 700 } },
                                     h.unitId,
                                     " ",
-                                    React.createElement("span", { style: { color: "#aa9080", fontSize: 12, fontWeight: 400 } },
+                                    React.createElement("span", { style: { color: "#888888", fontSize: 12, fontWeight: 400 } },
                                         "\u00B7 ",
                                         h.unitRegion)),
-                                upcoming && React.createElement("p", { style: { color: "#c4a878", fontSize: 11, flexShrink: 0 } },
+                                upcoming && React.createElement("p", { style: { color: "#888888", fontSize: 11, flexShrink: 0 } },
                                     "\u231B ",
                                     upcoming.daysAway,
                                     "d"))));
                     })),
-                hits.length === 0 && React.createElement("p", { style: { color: "#aa9080", fontSize: 13, textAlign: "center", padding: "30px 0" } },
+                hits.length === 0 && React.createElement("p", { style: { color: "#888888", fontSize: 13, textAlign: "center", padding: "30px 0" } },
                     "No units found for ",
                     selSpecies.name,
                     " in ",
@@ -891,8 +961,8 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
     if (selStateCode) {
         const st = _cache[selStateCode];
         if (!st) return React.createElement("div", { className: "sc", style: { flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:12 } },
-            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#7ec87a", animation:"spin .8s linear infinite" } }),
-            React.createElement("p", { style: { color:"#8acc84", fontSize:13 } }, "Loading " + selStateCode + "..."));
+            React.createElement("div", { style: { width:32, height:32, borderRadius:"50%", border:"3px solid #2a1c0c", borderTopColor:"#27ae60", animation:"spin .8s linear infinite" } }),
+            React.createElement("p", { style: { color:"#2ecc71", fontSize:13 } }, "Loading " + selStateCode + "..."));
         // Build species list for this state from its units
         const spMap = {};
         for (const unit of st.units) {
@@ -910,14 +980,14 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
             return ci || a.name.localeCompare(b.name);
         });
         return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+            React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 } },
-                    React.createElement("button", { onClick: () => setSelStateCode(null), style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
-                    React.createElement("div", { style: { width: 40, height: 40, background: "#351f0c", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
-                        React.createElement("span", { style: { color: "#e8c87a", fontSize: 15, fontWeight: 800 } }, selStateCode)),
+                    React.createElement("button", { onClick: () => setSelStateCode(null), style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer", lineHeight: 1 } }, "\u2190"),
+                    React.createElement("div", { style: { width: 40, height: 40, background: "#f0ebe4", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
+                        React.createElement("span", { style: { color: "#1a1a1a", fontSize: 15, fontWeight: 800 } }, selStateCode)),
                     React.createElement("div", null,
-                        React.createElement("h2", { style: { color: "#e8c87a", fontSize: 17, fontWeight: 700, fontFamily: "'Playfair Display',serif" } }, st.name),
-                        React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Select a species")))),
+                        React.createElement("h2", { style: { color: "#1a1a1a", fontSize: 17, fontWeight: 700, fontFamily: "system-ui,sans-serif" } }, st.name),
+                        React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Select a species")))),
             React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "12px 20px" } }, cats.map(cat => {
                 const sps = spList.filter(s => s.category === cat);
                 if (!sps.length)
@@ -925,74 +995,74 @@ function StateSpeciesBrowseScr({ onBack, checkDate, isTripMode, tripDate, onSele
                 const cc = catColors[cat] || "#8a7060";
                 return (React.createElement("div", { key: cat, style: { marginBottom: 18 } },
                     React.createElement("p", { style: { color: cc, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8, borderBottom: ("1px solid " + cc + "30"), paddingBottom: 5 } }, cat),
-                    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 } }, sps.map(sp => (React.createElement("button", { key: sp.name, className: "hucard", onClick: () => setSelSpecies(sp), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 12px", background: "#2c2010", border: ("1px solid " + (sp.openUnits > 0 ? "#2a4018" : "#2a1608")), borderRadius: 13, textAlign: "left", cursor: "pointer" } },
+                    React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 } }, sps.map(sp => (React.createElement("button", { key: sp.name, className: "hucard", onClick: () => setSelSpecies(sp), style: { display: "flex", alignItems: "center", gap: 10, padding: "11px 12px", background: "#ffffff", border: ("1px solid " + (sp.openUnits > 0 ? "#2a4018" : "#2a1608")), borderRadius: 13, textAlign: "left", cursor: "pointer" } },
                         React.createElement("span", { style: { fontSize: 22, flexShrink: 0 } }, sp.icon),
                         React.createElement("div", { style: { minWidth: 0 } },
-                            React.createElement("p", { style: { color: "#d4b87a", fontSize: 12, fontWeight: 700, lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, sp.name),
+                            React.createElement("p", { style: { color: "#2a2a2a", fontSize: 12, fontWeight: 700, lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, sp.name),
                             React.createElement("p", { style: { color: sp.openUnits > 0 ? "#5a8a4a" : "#8a7060", fontSize: 11, marginTop: 2 } }, sp.openUnits > 0 ? (sp.openUnits + "/" + sp.totalUnits + " units open") : ("closed")))))))));
             }))));
     }
     // LEVEL 1: state picker
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-        React.createElement("div", { style: { padding: "14px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+        React.createElement("div", { style: { padding: "14px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer" } }, "\u2190"),
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer" } }, "\u2190"),
                 React.createElement("div", null,
-                    React.createElement("h2", { style: { color: "#e8c87a", fontSize: 18, fontWeight: 700, fontFamily: "'Playfair Display',serif" } }, "Browse by State"),
-                    React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "State \u203A Species \u203A Unit")))),
+                    React.createElement("h2", { style: { color: "#1a1a1a", fontSize: 18, fontWeight: 700, fontFamily: "system-ui,sans-serif" } }, "Browse by State"),
+                    React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "State \u203A Species \u203A Unit")))),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "10px 20px" } }, allStates.map(s => {
             const st = _cache[s.code];
             if (!st) return null;
             const openCount = st.units.reduce((a, u) => a + u.species.reduce((b, sp) => b + (sp.seasons.some(se => isSeasonOpen(se.ranges, checkDate)) ? 1 : 0), 0), 0);
-            return (React.createElement("button", { key: s.code, className: "hucard", onClick: () => setSelStateCode(s.code), style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "13px 14px", marginBottom: 8, background: openCount > 0 ? "#223018" : "#2c2010", border: ("1px solid " + (openCount > 0 ? "#2a4018" : "#2a1608")), borderRadius: 14, cursor: "pointer", textAlign: "left" } },
+            return (React.createElement("button", { key: s.code, className: "hucard", onClick: () => setSelStateCode(s.code), style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "13px 14px", marginBottom: 8, background: openCount > 0 ? "#f0f9ee" : "#ffffff", border: ("1px solid " + (openCount > 0 ? "#b8d8a8" : "#e8e0d8")), borderRadius: 14, cursor: "pointer", textAlign: "left" } },
                 React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
-                    React.createElement("div", { style: { width: 40, height: 40, background: openCount > 0 ? "#1e3010" : "#351f0c", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
-                        React.createElement("span", { style: { color: openCount > 0 ? "#7ab060" : "#b08050", fontSize: 13, fontWeight: 800 } }, s.code)),
+                    React.createElement("div", { style: { width: 40, height: 40, background: openCount > 0 ? "#e0f0d8" : "#f0ebe4", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 } },
+                        React.createElement("span", { style: { color: openCount > 0 ? "#27ae60" : "#b08050", fontSize: 13, fontWeight: 800 } }, s.code)),
                     React.createElement("div", null,
-                        React.createElement("p", { style: { color: openCount > 0 ? "#c4d4a0" : "#d4b878", fontSize: 14, fontWeight: 700 } }, s.name),
+                        React.createElement("p", { style: { color: openCount > 0 ? "#c4d4a0" : "#2a2a2a", fontSize: 14, fontWeight: 700 } }, s.name),
                         React.createElement("p", { style: { color: openCount > 0 ? "#5a8a4a" : "#8a7060", fontSize: 12, marginTop: 1 } },
                             st.units.length,
                             " units \u00B7 ",
                             openCount > 0 ? (openCount + " seasons open") : "all closed"))),
-                React.createElement("span", { style: { color: openCount > 0 ? "#7aaa60" : "#9a8070", fontSize: 18 } }, "\u203A")));
+                React.createElement("span", { style: { color: openCount > 0 ? "#27ae60" : "#999999", fontSize: 18 } }, "\u203A")));
         }))));
 }
 function HomeScr({ allStates, detectLoc, locLoading, locError, setScreen, setSelState, setSelUnit, tripDate, setTripDate, isTripMode, liveNow, checkDate, onSelectSpeciesBrowse, onSelectStateSpeciesBrowse, onFindLocation }) {
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-        React.createElement("div", { style: { background: "linear-gradient(155deg,#3a2a16,#241808)", padding: "26px 26px 20px", position: "relative", overflow: "hidden", flexShrink: 0 } },
+        React.createElement("div", { style: { background: "linear-gradient(155deg,#1a1a1a,#2a2a2a)", padding: "26px 26px 20px", position: "relative", overflow: "hidden", flexShrink: 0 } },
             [...Array(16)].map((_, i) => React.createElement("div", { key: i, style: { position: "absolute", width: 2, height: 2, background: "rgba(180,130,60,.1)", borderRadius: "50%", top: `${10 + Math.random() * 80}%`, left: `${5 + Math.random() * 90}%` } })),
-            React.createElement("p", { style: { color: "#b89a78", fontSize: 11, letterSpacing: 4, textTransform: "uppercase", fontFamily: "'Source Serif 4',serif", marginBottom: 5, position: "relative" } }, "Field Guide \u00B7 2025\u201326"),
-            React.createElement("h1", { style: { fontFamily: "'Playfair Display',serif", fontSize: 34, fontWeight: 900, color: "#e8c87a", lineHeight: 1.05, marginBottom: 5, position: "relative" } },
+            React.createElement("p", { style: { color: "#777777", fontSize: 11, letterSpacing: 4, textTransform: "uppercase", fontFamily: "system-ui,sans-serif", marginBottom: 5, position: "relative" } }, "Field Guide \u00B7 2025\u201326"),
+            React.createElement("h1", { style: { fontFamily: "system-ui,sans-serif", fontSize: 34, fontWeight: 900, color: "#1a1a1a", lineHeight: 1.05, marginBottom: 5, position: "relative" } },
                 "Hunt",
                 React.createElement("br", null),
                 "Season"),
-            React.createElement("p", { style: { color: "#c4a888", fontSize: 12, fontFamily: "'Source Serif 4',serif", lineHeight: 1.6, position: "relative" } }, "Live seasons by state & unit \u2014 or plan a future trip.")),
+            React.createElement("p", { style: { color: "#888888", fontSize: 12, fontFamily: "system-ui,sans-serif", lineHeight: 1.6, position: "relative" } }, "Live seasons by state & unit \u2014 or plan a future trip.")),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "16px 20px" } },
             React.createElement(TripPicker, { tripDate: tripDate, setTripDate: setTripDate, isTripMode: isTripMode, liveNow: liveNow }),
             React.createElement("div", { style: { height: 1, background: "#321e0c", margin: "10px 0" } }),
-            React.createElement("button", { className: "hbtn", onClick: detectLoc, disabled: locLoading, style: { width: "100%", padding: "14px", background: locLoading ? "#351f0c" : "linear-gradient(135deg,#b4823a,#8a5c1a)", borderRadius: 15, color: "#fff", fontSize: 14, fontFamily: "'Playfair Display',serif", fontWeight: 700, marginBottom: 9, boxShadow: "0 4px 18px rgba(180,130,60,.25)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 } }, locLoading ? React.createElement("span", { style: { display: "flex", gap: 5 } }, [0, 1, 2].map(i => React.createElement("span", { key: i, style: { width: 6, height: 6, background: "rgba(255,255,255,.4)", borderRadius: "50%" } }))) : React.createElement(React.Fragment, null,
+            React.createElement("button", { className: "hbtn", onClick: detectLoc, disabled: locLoading, style: { width: "100%", padding: "14px", background: locLoading ? "#351f0c" : "linear-gradient(135deg,#b4823a,#8a5c1a)", borderRadius: 15, color: "#fff", fontSize: 14, fontFamily: "system-ui,sans-serif", fontWeight: 700, marginBottom: 9, boxShadow: "0 4px 18px rgba(180,130,60,.25)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 } }, locLoading ? React.createElement("span", { style: { display: "flex", gap: 5 } }, [0, 1, 2].map(i => React.createElement("span", { key: i, style: { width: 6, height: 6, background: "rgba(255,255,255,.4)", borderRadius: "50%" } }))) : React.createElement(React.Fragment, null,
                 React.createElement("span", { style: { fontSize: 18 } }, "\uD83D\uDCCD"),
                 "Use My Location")),
             locError && React.createElement("div", { style: { background: "rgba(160,40,20,.1)", border: "1px solid rgba(160,40,20,.22)", borderRadius: 10, padding: "9px 13px", marginBottom: 9 } },
                 React.createElement("p", { style: { color: "#c05040", fontSize: 12, lineHeight: 1.5 } }, locError)),
-            React.createElement("button", { className: "hbtn", onClick: onFindLocation, style: { width: "100%", padding: "14px", background: "linear-gradient(135deg,#1e3a1a,#162e13)", borderRadius: 15, color: "#7ec87a", fontSize: 14, fontFamily: "'Playfair Display',serif", fontWeight: 700, marginBottom: 9, boxShadow: "0 4px 18px rgba(60,130,60,.15)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, border: "1.5px solid #2a4a20" } },
+            React.createElement("button", { className: "hbtn", onClick: onFindLocation, style: { width: "100%", padding: "14px", background: "linear-gradient(135deg,#1e3a1a,#162e13)", borderRadius: 15, color: "#27ae60", fontSize: 14, fontFamily: "system-ui,sans-serif", fontWeight: 700, marginBottom: 9, boxShadow: "0 4px 18px rgba(60,130,60,.15)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, border: "1.5px solid #2a4a20" } },
                 React.createElement("span", { style: { fontSize: 18 } }, "\uD83D\uDD0D"),
                 "Search by City, State or ZIP"),
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10, margin: "5px 0" } },
                 React.createElement("div", { style: { flex: 1, height: 1, background: "#321e0c" } }),
-                React.createElement("span", { style: { color: "#5a3818", fontSize: 12, letterSpacing: 2 } }, "OR"),
+                React.createElement("span", { style: { color: "#cccccc", fontSize: 12, letterSpacing: 2 } }, "OR"),
                 React.createElement("div", { style: { flex: 1, height: 1, background: "#321e0c" } })),
-            React.createElement("button", { className: "hbtn", onClick: () => setScreen("pick-state"), style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#b4823a", fontSize: 14, fontFamily: "'Playfair Display',serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 9 } },
+            React.createElement("button", { className: "hbtn", onClick: () => setScreen("pick-state"), style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#c0392b", fontSize: 14, fontFamily: "system-ui,sans-serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 9 } },
                 React.createElement("span", { style: { fontSize: 16 } }, "\uD83D\uDDFA\uFE0F"),
                 "Browse by State & Unit"),
-            React.createElement("button", { className: "hbtn", onClick: onSelectSpeciesBrowse, style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#b4823a", fontSize: 14, fontFamily: "'Playfair Display',serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 9 } },
+            React.createElement("button", { className: "hbtn", onClick: onSelectSpeciesBrowse, style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#c0392b", fontSize: 14, fontFamily: "system-ui,sans-serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 9 } },
                 React.createElement("span", { style: { fontSize: 16 } }, "\uD83E\uDD8C"),
                 "Browse by Species"),
-            React.createElement("button", { className: "hbtn", onClick: onSelectStateSpeciesBrowse, style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#b4823a", fontSize: 14, fontFamily: "'Playfair Display',serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 } },
+            React.createElement("button", { className: "hbtn", onClick: onSelectStateSpeciesBrowse, style: { width: "100%", padding: "12px", background: "transparent", borderRadius: 15, color: "#c0392b", fontSize: 14, fontFamily: "system-ui,sans-serif", fontWeight: 700, border: "1.5px solid #3e2410", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 } },
                 React.createElement("span", { style: { fontSize: 16 } }, "\uD83D\uDDFA\uFE0F"),
                 "Browse by State, then Species"),
-            React.createElement("p", { style: { color: "#5a3818", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontFamily: "'Source Serif 4',serif", marginBottom: 8 } }, "Available States"),
-            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7 } }, allStates.map(s => (React.createElement("button", { key: s.code, className: "hbtn", onClick: () => { setSelState(s.code); setSelUnit(null); setScreen("pick-unit"); }, style: { padding: "7px 14px", background: "#2e2010", borderRadius: 20, color: s.verified ? "#e8c87a" : "#d4b878", fontSize: 12, fontFamily: "'Source Serif 4',serif", border: `1px solid ${s.verified ? "#4a3010" : "#2e1a0c"}` } },
+            React.createElement("p", { style: { color: "#cccccc", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontFamily: "system-ui,sans-serif", marginBottom: 8 } }, "Available States"),
+            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7 } }, allStates.map(s => (React.createElement("button", { key: s.code, className: "hbtn", onClick: () => { setSelState(s.code); setSelUnit(null); setScreen("pick-unit"); }, style: { padding: "7px 14px", background: "#f5f0eb", borderRadius: 20, color: s.verified ? "#1a1a1a" : "#2a2a2a", fontSize: 12, fontFamily: "system-ui,sans-serif", border: `1px solid ${s.verified ? "#4a3010" : "#2e1a0c"}` } },
                 s.name,
                 s.verified ? " ✓" : "")))))));
 }
@@ -1000,51 +1070,51 @@ function StateScr({ allStates, onSelect, onBack }) {
     const [q, setQ] = useState("");
     const f = allStates.filter(s => s.name.toLowerCase().includes(q.toLowerCase()));
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-        React.createElement("div", { style: { padding: "16px 20px 11px", background: "#231608", borderBottom: "1px solid #301a0a" } },
+        React.createElement("div", { style: { padding: "16px 20px 11px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0" } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 12 } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer" } }, "\u2190"),
-                React.createElement("h2", { style: { fontFamily: "'Playfair Display',serif", color: "#e8c87a", fontSize: 18, fontWeight: 700 } }, "Select State")),
-            React.createElement("input", { placeholder: "Search\u2026", value: q, onChange: e => setQ(e.target.value), style: { width: "100%", padding: "10px 13px", background: "#2e2010", border: "1px solid #3e2410", borderRadius: 11, color: "#d4b87a", fontSize: 13 } })),
-        React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "6px 20px" } }, f.map(s => (React.createElement("button", { key: s.code, className: "hbtn", onClick: () => onSelect(s.code), style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "13px 4px", background: "transparent", borderBottom: "1px solid #2e1c0c", cursor: "pointer", textAlign: "left" } },
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer" } }, "\u2190"),
+                React.createElement("h2", { style: { fontFamily: "system-ui,sans-serif", color: "#1a1a1a", fontSize: 18, fontWeight: 700 } }, "Select State")),
+            React.createElement("input", { placeholder: "Search\u2026", value: q, onChange: e => setQ(e.target.value), style: { width: "100%", padding: "10px 13px", background: "#f5f0eb", border: "1px solid #3e2410", borderRadius: 11, color: "#2a2a2a", fontSize: 13 } })),
+        React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "6px 20px" } }, f.map(s => (React.createElement("button", { key: s.code, className: "hbtn", onClick: (e) => { triggerArrowHit(e.currentTarget); onSelect(s.code); }, style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "13px 4px", background: "transparent", borderBottom: "1px solid #e8e0d8", cursor: "pointer", textAlign: "left" } },
             React.createElement("div", null,
-                React.createElement("p", { style: { color: "#d4b878", fontSize: 14, fontFamily: "'Source Serif 4',serif" } },
+                React.createElement("p", { style: { color: "#2a2a2a", fontSize: 14, fontFamily: "system-ui,sans-serif" } },
                     s.name,
                     " ",
                     s.verified && React.createElement("span", { style: { color: "#6a9a3a", fontSize: 12 } }, "\u2713 verified")),
-                s.agency && React.createElement("p", { style: { color: "#aa9080", fontSize: 12, marginTop: 1 } }, s.agency.shortName)),
-            React.createElement("span", { style: { color: "#9a8070" } }, "\u203A")))))));
+                s.agency && React.createElement("p", { style: { color: "#888888", fontSize: 12, marginTop: 1 } }, s.agency.shortName)),
+            React.createElement("span", { style: { color: "#999999" } }, "\u203A")))))));
 }
 function UnitScr({ state, checkDate, onSelect, onBack, detectLoc, locLoading, tripDate, setTripDate, isTripMode, liveNow, onFindLocation }) {
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
-        React.createElement("div", { style: { padding: "16px 20px 12px", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0 } },
+        React.createElement("div", { style: { padding: "16px 20px 12px", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0 } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer" } }, "\u2190"),
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer" } }, "\u2190"),
                 React.createElement("div", null,
-                    React.createElement("h2", { style: { fontFamily: "'Playfair Display',serif", color: "#e8c87a", fontSize: 18, fontWeight: 700 } }, state.name),
-                    React.createElement("p", { style: { color: "#aa9080", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Select Wildlife Management Unit")))),
+                    React.createElement("h2", { style: { fontFamily: "system-ui,sans-serif", color: "#1a1a1a", fontSize: 18, fontWeight: 700 } }, state.name),
+                    React.createElement("p", { style: { color: "#888888", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" } }, "Select Wildlife Management Unit")))),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "12px 20px" } },
             React.createElement(TripPicker, { tripDate: tripDate, setTripDate: setTripDate, isTripMode: isTripMode, liveNow: liveNow }),
             React.createElement(AgencyPanel, { agency: state.agency, verified: state.verified }),
             React.createElement("div", { style: { display: "flex", gap: 8, marginBottom: 12 } },
-                React.createElement("button", { className: "hbtn", onClick: detectLoc, disabled: locLoading, style: { flex: 1, padding: "11px", background: "rgba(180,130,60,.08)", borderRadius: 11, color: "#b4823a", fontSize: 12, border: "1px solid #3a2010", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 } },
+                React.createElement("button", { className: "hbtn", onClick: detectLoc, disabled: locLoading, style: { flex: 1, padding: "11px", background: "rgba(180,130,60,.08)", borderRadius: 11, color: "#c0392b", fontSize: 12, border: "1px solid #e0d8d0", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 } },
                     React.createElement("span", null, "\uD83D\uDCCD"),
                     locLoading ? "Detecting…" : "Use GPS"),
-                React.createElement("button", { className: "hbtn", onClick: onFindLocation, style: { flex: 1, padding: "11px", background: "rgba(60,130,60,.08)", borderRadius: 11, color: "#7ec87a", fontSize: 12, border: "1px solid #2a4a20", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 } },
+                React.createElement("button", { className: "hbtn", onClick: onFindLocation, style: { flex: 1, padding: "11px", background: "rgba(60,130,60,.08)", borderRadius: 11, color: "#27ae60", fontSize: 12, border: "1px solid #2a4a20", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 } },
                     React.createElement("span", null, "\uD83D\uDD0D"),
                     "City / ZIP")),
-            React.createElement("p", { style: { color: "#5a3818", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", marginBottom: 9 } }, "Or choose manually"),
+            React.createElement("p", { style: { color: "#cccccc", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", marginBottom: 9 } }, "Or choose manually"),
             state.units.map(u => {
                 const open = u.species.reduce((a, sp) => a + sp.seasons.filter(se => isSeasonOpen(se.ranges, checkDate)).length, 0);
-                return (React.createElement("div", { key: u.id, className: "hucard", onClick: () => onSelect(u.id), style: { background: "#2c2010", borderRadius: 15, padding: "13px 15px", marginBottom: 9, border: "1px solid #2a1608" } },
+                return (React.createElement("div", { key: u.id, className: "hucard", onClick: () => onSelect(u.id), style: { background: "#ffffff", borderRadius: 15, padding: "13px 15px", marginBottom: 9, border: "1px solid #2a1608" } },
                     React.createElement("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 6 } },
                         React.createElement("div", null,
-                            React.createElement("span", { style: { background: "#2a1808", color: "#c4943a", fontSize: 11, letterSpacing: 1.5, padding: "3px 8px", borderRadius: 7, border: "1px solid #3a2010", fontWeight: 600, display: "inline-block", marginBottom: 4 } },
+                            React.createElement("span", { style: { background: "#2a1808", color: "#c0392b", fontSize: 11, letterSpacing: 1.5, padding: "3px 8px", borderRadius: 7, border: "1px solid #e0d8d0", fontWeight: 600, display: "inline-block", marginBottom: 4 } },
                                 "UNIT ",
                                 u.id),
-                            React.createElement("h3", { style: { fontFamily: "'Playfair Display',serif", color: "#e8c87a", fontSize: 15, fontWeight: 700 } }, u.region)),
-                        React.createElement("span", { style: { color: "#9a8070", fontSize: 20 } }, "\u203A")),
-                    React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: open > 0 ? "#6a8a5a" : "#9a8070" } },
-                        React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: open > 0 ? "#4a8a3a" : "#5a3030", boxShadow: open > 0 ? "0 0 4px rgba(74,138,58,.5)" : "none", display: "inline-block" } }),
+                            React.createElement("h3", { style: { fontFamily: "system-ui,sans-serif", color: "#1a1a1a", fontSize: 15, fontWeight: 700 } }, u.region)),
+                        React.createElement("span", { style: { color: "#999999", fontSize: 20 } }, "\u203A")),
+                    React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: open > 0 ? "#6a8a5a" : "#999999" } },
+                        React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: open > 0 ? "#27ae60" : "#5a3030", boxShadow: open > 0 ? "0 0 4px rgba(74,138,58,.5)" : "none", display: "inline-block" } }),
                         open > 0 ? `${open} open season${open !== 1 ? "s" : ""}` : "No open seasons",
                         isTripMode ? " on trip" : "",
                         " \u00B7 ",
@@ -1060,74 +1130,74 @@ function SpeciesScr({ unit, stateName, stateCode, agency, verified, allStates, f
     const curStateData = _cache[stateCode];
     return (React.createElement("div", { className: "sc", style: { flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" } },
         (showStatePicker || showUnitPicker) && React.createElement("div", { onClick: closeAll, style: { position: "absolute", inset: 0, zIndex: 65 } }),
-        React.createElement("div", { style: { padding: "10px 20px 0", background: "#231608", borderBottom: "1px solid #301a0a", flexShrink: 0, position: "relative", zIndex: 66 } },
+        React.createElement("div", { style: { padding: "10px 20px 0", background: "#1a1a1a", borderBottom: "1px solid #e0e0e0", flexShrink: 0, position: "relative", zIndex: 66 } },
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 9, position: "relative" } },
-                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#b4823a", fontSize: 20, cursor: "pointer", lineHeight: 1, padding: "0 4px 0 0", flexShrink: 0 } }, "\u2190"),
-                React.createElement("button", { onClick: () => { setShowStatePicker(s => !s); setShowUnitPicker(false); }, style: { display: "flex", alignItems: "center", gap: 5, padding: "6px 13px", background: showStatePicker ? "rgba(180,130,60,.18)" : "rgba(180,130,60,.08)", border: `1px solid ${showStatePicker ? "#b4823a" : "#5a3818"}`, borderRadius: 20, cursor: "pointer", flex: "0 0 auto" } },
-                    React.createElement("span", { style: { color: "#e8c87a", fontSize: 15, fontWeight: 700 } }, stateCode),
-                    React.createElement("span", { style: { color: "#b89a78", fontSize: 12 } }, showStatePicker ? "▲" : "▼")),
-                React.createElement("span", { style: { color: "#5a3818", fontSize: 14 } }, "\u203A"),
-                React.createElement("button", { onClick: () => { setShowUnitPicker(s => !s); setShowStatePicker(false); }, style: { display: "flex", alignItems: "center", gap: 5, padding: "6px 13px", background: showUnitPicker ? "rgba(180,130,60,.18)" : "rgba(180,130,60,.08)", border: `1px solid ${showUnitPicker ? "#b4823a" : "#5a3818"}`, borderRadius: 20, cursor: "pointer", flex: "0 0 auto" } },
-                    React.createElement("span", { style: { color: "#c4943a", fontSize: 15, fontWeight: 700 } }, unit.id),
-                    React.createElement("span", { style: { color: "#b89a78", fontSize: 12, maxWidth: 110, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } },
+                React.createElement("button", { onClick: onBack, style: { background: "none", border: "none", color: "#c0392b", fontSize: 20, cursor: "pointer", lineHeight: 1, padding: "0 4px 0 0", flexShrink: 0 } }, "\u2190"),
+                React.createElement("button", { onClick: () => { setShowStatePicker(s => !s); setShowUnitPicker(false); }, style: { display: "flex", alignItems: "center", gap: 5, padding: "6px 13px", background: showStatePicker ? "rgba(192,57,43,.1)" : "#f5f5f5", border: `1px solid ${showStatePicker ? "#c0392b" : "#cccccc"}`, borderRadius: 20, cursor: "pointer", flex: "0 0 auto" } },
+                    React.createElement("span", { style: { color: "#1a1a1a", fontSize: 15, fontWeight: 700 } }, stateCode),
+                    React.createElement("span", { style: { color: "#777777", fontSize: 12 } }, showStatePicker ? "▲" : "▼")),
+                React.createElement("span", { style: { color: "#cccccc", fontSize: 14 } }, "\u203A"),
+                React.createElement("button", { onClick: () => { setShowUnitPicker(s => !s); setShowStatePicker(false); }, style: { display: "flex", alignItems: "center", gap: 5, padding: "6px 13px", background: showUnitPicker ? "rgba(192,57,43,.1)" : "#f5f5f5", border: `1px solid ${showUnitPicker ? "#c0392b" : "#cccccc"}`, borderRadius: 20, cursor: "pointer", flex: "0 0 auto" } },
+                    React.createElement("span", { style: { color: "#c0392b", fontSize: 15, fontWeight: 700 } }, unit.id),
+                    React.createElement("span", { style: { color: "#777777", fontSize: 12, maxWidth: 110, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } },
                         " ",
                         unit.region),
-                    React.createElement("span", { style: { color: "#b89a78", fontSize: 12 } }, showUnitPicker ? "▲" : "▼")),
+                    React.createElement("span", { style: { color: "#777777", fontSize: 12 } }, showUnitPicker ? "▲" : "▼")),
                 React.createElement("div", { style: { flex: 1 } }),
-                React.createElement("span", { style: { color: openCount > 0 ? "#5a8a4a" : "#9a8070", fontSize: 12, flexShrink: 0 } },
+                React.createElement("span", { style: { color: openCount > 0 ? "#5a8a4a" : "#999999", fontSize: 12, flexShrink: 0 } },
                     openCount,
                     " open"),
-                React.createElement("button", { onClick: onHome, style: { background: "none", border: "none", color: "#b4823a", fontSize: 18, cursor: "pointer", padding: "0 0 0 8px", lineHeight: 1 }, title: "Home" }, "\u2302"),
-                showStatePicker && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 4px)", left: 0, width: 200, background: "#2c2010", border: "1px solid #3a2010", borderRadius: 12, zIndex: 70, boxShadow: "0 12px 40px rgba(0,0,0,.7)", overflow: "hidden" } }, allStates.map(s => {
+                React.createElement("button", { onClick: onHome, style: { background: "none", border: "none", color: "#c0392b", fontSize: 18, cursor: "pointer", padding: "0 0 0 8px", lineHeight: 1 }, title: "Home" }, "\u2302"),
+                showStatePicker && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 4px)", left: 0, width: 200, background: "#ffffff", border: "1px solid #e0d8d0", borderRadius: 12, zIndex: 70, boxShadow: "0 12px 40px rgba(0,0,0,.7)", overflow: "hidden" } }, allStates.map(s => {
                     var _a;
-                    return (React.createElement("button", { key: s.code, onClick: () => { onSwitchState(s.code); setShowStatePicker(false); }, style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "10px 14px", background: s.code === stateCode ? "rgba(180,130,60,.12)" : "transparent", borderBottom: "1px solid #351f0c", cursor: "pointer", textAlign: "left" } },
+                    return (React.createElement("button", { key: s.code, onClick: () => { onSwitchState(s.code); setShowStatePicker(false); }, style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "10px 14px", background: s.code === stateCode ? "rgba(180,130,60,.12)" : "transparent", borderBottom: "1px solid #eeeeee", cursor: "pointer", textAlign: "left" } },
                         React.createElement("div", null,
-                            React.createElement("p", { style: { color: s.code === stateCode ? "#e8c87a" : "#d4b878", fontSize: 13, fontWeight: s.code === stateCode ? 700 : 400 } }, s.name),
-                            React.createElement("p", { style: { color: "#aa9080", fontSize: 11 } }, (_a = s.agency) === null || _a === void 0 ? void 0 : _a.shortName)),
-                        s.code === stateCode && React.createElement("span", { style: { color: "#b4823a", fontSize: 12 } }, "\u2713")));
+                            React.createElement("p", { style: { color: s.code === stateCode ? "#1a1a1a" : "#2a2a2a", fontSize: 13, fontWeight: s.code === stateCode ? 700 : 400 } }, s.name),
+                            React.createElement("p", { style: { color: "#888888", fontSize: 11 } }, (_a = s.agency) === null || _a === void 0 ? void 0 : _a.shortName)),
+                        s.code === stateCode && React.createElement("span", { style: { color: "#c0392b", fontSize: 12 } }, "\u2713")));
                 }))),
-                showUnitPicker && curStateData && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 4px)", left: 80, right: 0, background: "#2c2010", border: "1px solid #3a2010", borderRadius: 12, zIndex: 70, boxShadow: "0 12px 40px rgba(0,0,0,.7)", overflow: "hidden" } }, curStateData.units.map(u => {
+                showUnitPicker && curStateData && (React.createElement("div", { style: { position: "absolute", top: "calc(100% + 4px)", left: 80, right: 0, background: "#ffffff", border: "1px solid #e0d8d0", borderRadius: 12, zIndex: 70, boxShadow: "0 12px 40px rgba(0,0,0,.7)", overflow: "hidden" } }, curStateData.units.map(u => {
                     const open = u.species.reduce((a, sp) => a + sp.seasons.filter(se => isSeasonOpen(se.ranges, checkDate)).length, 0);
-                    return (React.createElement("button", { key: u.id, onClick: () => { onSwitchUnit(u.id); setShowUnitPicker(false); }, style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "10px 14px", background: u.id === unit.id ? "rgba(180,130,60,.12)" : "transparent", borderBottom: "1px solid #351f0c", cursor: "pointer", textAlign: "left" } },
+                    return (React.createElement("button", { key: u.id, onClick: () => { onSwitchUnit(u.id); setShowUnitPicker(false); }, style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "10px 14px", background: u.id === unit.id ? "rgba(180,130,60,.12)" : "transparent", borderBottom: "1px solid #eeeeee", cursor: "pointer", textAlign: "left" } },
                         React.createElement("div", null,
-                            React.createElement("p", { style: { color: u.id === unit.id ? "#e8c87a" : "#d4b878", fontSize: 13, fontWeight: u.id === unit.id ? 700 : 400 } },
+                            React.createElement("p", { style: { color: u.id === unit.id ? "#1a1a1a" : "#2a2a2a", fontSize: 13, fontWeight: u.id === unit.id ? 700 : 400 } },
                                 u.id,
                                 " ",
-                                React.createElement("span", { style: { color: "#c4a878", fontSize: 12, fontWeight: 400 } },
+                                React.createElement("span", { style: { color: "#888888", fontSize: 12, fontWeight: 400 } },
                                     "\u00B7 ",
                                     u.region)),
                             React.createElement("p", { style: { color: open > 0 ? "#5a8a4a" : "#8a7060", fontSize: 11 } }, open > 0 ? `${open} open now` : "No open seasons")),
-                        u.id === unit.id && React.createElement("span", { style: { color: "#b4823a", fontSize: 12 } }, "\u2713")));
+                        u.id === unit.id && React.createElement("span", { style: { color: "#c0392b", fontSize: 12 } }, "\u2713")));
                 })))),
             React.createElement(TripPicker, { tripDate: tripDate, setTripDate: setTripDate, isTripMode: isTripMode, liveNow: liveNow }),
             React.createElement("div", { style: { position: "relative", marginBottom: 7 } },
                 React.createElement("span", { style: { position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", fontSize: 12, opacity: .3 } }, "\uD83D\uDD0D"),
-                React.createElement("input", { placeholder: "Search species\u2026", value: search, onChange: e => setSearch(e.target.value), style: { width: "100%", padding: "8px 11px 8px 28px", background: "#2c2010", border: "1px solid #2a1608", borderRadius: 9, color: "#d4b87a", fontSize: 13 } })),
-            React.createElement("div", { style: { display: "flex", gap: 5, marginBottom: 7 } }, ["all", "open", "closed"].map(s => (React.createElement("button", { key: s, className: "hpill", onClick: () => setStatusFilter(s), style: { padding: "5px 11px", borderRadius: 20, background: statusFilter === s ? "#b4823a" : "#2c2010", color: statusFilter === s ? "#fff" : "#7a6040", fontSize: 12, border: "1px solid #2a1608" } }, s === "all" ? "All" : s === "open" ? `✅ Open${isTripMode ? " on Trip" : ""}` : "🔒 Closed")))),
-            React.createElement("div", { style: { display: "flex", gap: 5, overflowX: "auto", paddingBottom: 9, scrollbarWidth: "none" } }, ["All", "Big Game", "Turkey", "Waterfowl", "Upland Bird", "Small Game", "Feral Species", "Predator & Non-Game"].map(c => (React.createElement("button", { key: c, className: "hpill", onClick: () => setCatFilter(c), style: { padding: "5px 11px", borderRadius: 20, whiteSpace: "nowrap", background: catFilter === c ? "#b4823a" : "#2c2010", color: catFilter === c ? "#fff" : "#7a6040", fontSize: 12, border: "1px solid #2a1608" } }, c))))),
+                React.createElement("input", { placeholder: "Search species\u2026", value: search, onChange: e => setSearch(e.target.value), style: { width: "100%", padding: "8px 11px 8px 28px", background: "#ffffff", border: "1px solid #2a1608", borderRadius: 9, color: "#2a2a2a", fontSize: 13 } })),
+            React.createElement("div", { style: { display: "flex", gap: 5, marginBottom: 7 } }, ["all", "open", "closed"].map(s => (React.createElement("button", { key: s, className: "hpill", onClick: () => setStatusFilter(s), style: { padding: "5px 11px", borderRadius: 20, background: statusFilter === s ? "#c0392b" : "#2c2010", color: statusFilter === s ? "#fff" : "#7a6040", fontSize: 12, border: "1px solid #2a1608" } }, s === "all" ? "All" : s === "open" ? `✅ Open${isTripMode ? " on Trip" : ""}` : "🔒 Closed")))),
+            React.createElement("div", { style: { display: "flex", gap: 5, overflowX: "auto", paddingBottom: 9, scrollbarWidth: "none" } }, ["All", "Big Game", "Turkey", "Waterfowl", "Upland Bird", "Small Game", "Feral Species", "Predator & Non-Game"].map(c => (React.createElement("button", { key: c, className: "hpill", onClick: () => setCatFilter(c), style: { padding: "5px 11px", borderRadius: 20, whiteSpace: "nowrap", background: catFilter === c ? "#c0392b" : "#2c2010", color: catFilter === c ? "#fff" : "#7a6040", fontSize: 12, border: "1px solid #2a1608" } }, c))))),
         React.createElement("div", { style: { flex: 1, overflow: "auto", padding: "5px 20px 8px" } },
             filtered.length === 0 && React.createElement("div", { style: { textAlign: "center", marginTop: 50 } },
                 React.createElement("p", { style: { fontSize: 28, marginBottom: 10 } }, "\uD83C\uDF32"),
-                React.createElement("p", { style: { color: "#9a8070", fontSize: 14 } }, "No species match your filters.")),
+                React.createElement("p", { style: { color: "#999999", fontSize: 14 } }, "No species match your filters.")),
             filtered.map((sp, i) => {
                 const hasOpen = sp.seasons.some(se => se.isOpen);
                 const cc = catColors[sp.category] || "#8a7060";
                 const upcoming = !hasOpen ? sp.seasons.reduce((b, se) => { const n = nextOpenDate(se.ranges, checkDate); if (!n)
                     return b; if (!b || n.daysAway < b.daysAway)
                     return Object.assign(Object.assign({}, n), { method: se.method }); return b; }, null) : null;
-                return (React.createElement("div", { key: i, className: "hcard", onClick: () => { closeAll(); setSel(sp); }, style: { display: "flex", alignItems: "flex-start", gap: 11, padding: "11px 7px", borderBottom: "1px solid #1c1006", borderRadius: 9, marginBottom: 1, background: "transparent" } },
-                    React.createElement("div", { style: { width: 44, height: 44, background: "#2c2010", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 } }, sp.icon),
+                return (React.createElement("div", { key: i, className: "hcard", onClick: (e) => { triggerArrowHit(e.currentTarget); closeAll(); setSel(sp); }, style: { display: "flex", alignItems: "flex-start", gap: 11, padding: "11px 7px", borderBottom: "1px solid #eeeeee", borderRadius: 9, marginBottom: 1, background: "transparent" } },
+                    React.createElement("div", { style: { width: 44, height: 44, background: "#ffffff", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 } }, sp.icon),
                     React.createElement("div", { style: { flex: 1, minWidth: 0 } },
                         React.createElement("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 3 } },
-                            React.createElement("h3", { style: { fontFamily: "'Playfair Display',serif", color: "#d4b87a", fontSize: 14, fontWeight: 700, lineHeight: 1.2, flex: 1 } }, sp.name),
+                            React.createElement("h3", { style: { fontFamily: "system-ui,sans-serif", color: "#2a2a2a", fontSize: 14, fontWeight: 700, lineHeight: 1.2, flex: 1 } }, sp.name),
                             React.createElement("span", { style: { display: "flex", alignItems: "center", gap: 4, flexShrink: 0, marginLeft: 7 } },
-                                React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: hasOpen ? "#4a8a3a" : "#c05050", boxShadow: hasOpen ? "0 0 5px rgba(74,138,58,.5)" : "none", display: "inline-block" } }),
-                                React.createElement("span", { style: { color: hasOpen ? "#7aaa60" : "#c07060", fontSize: 11 } }, hasOpen ? isTripMode ? "Open on Trip" : "Open Now" : "Closed"))),
+                                React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: hasOpen ? "#27ae60" : "#c0392b", boxShadow: hasOpen ? "0 0 5px rgba(74,138,58,.5)" : "none", display: "inline-block" } }),
+                                React.createElement("span", { style: { color: hasOpen ? "#27ae60" : "#c0392b", fontSize: 11 } }, hasOpen ? isTripMode ? "Open on Trip" : "Open Now" : "Closed"))),
                         React.createElement("span", { style: { fontSize: 11, padding: "2px 7px", borderRadius: 8, background: `${cc}18`, color: cc, letterSpacing: 1.2, textTransform: "uppercase", border: `1px solid ${cc}30`, display: "inline-block", marginBottom: 4 } }, sp.category),
-                        React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 3 } }, sp.seasons.map((se, j) => (React.createElement("span", { key: j, style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 11, padding: "2px 7px", borderRadius: 8, background: se.isOpen ? "rgba(50,90,25,.22)" : "rgba(70,25,15,.18)", color: se.isOpen ? "#7ab060" : "#b07860", border: `1px solid ${se.isOpen ? "rgba(80,130,50,.22)" : "rgba(100,35,20,.2)"}` } },
+                        React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 3 } }, sp.seasons.map((se, j) => (React.createElement("span", { key: j, style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 11, padding: "2px 7px", borderRadius: 8, background: se.isOpen ? "rgba(50,90,25,.22)" : "rgba(70,25,15,.18)", color: se.isOpen ? "#27ae60" : "#c0392b", border: `1px solid ${se.isOpen ? "rgba(80,130,50,.22)" : "rgba(100,35,20,.2)"}` } },
                             React.createElement("span", { style: { fontSize: 12 } }, mIcon(se.method)),
                             React.createElement("span", { style: { maxWidth: 80, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, se.method.replace(/Firearm \((.+)\)/, "$1")))))),
-                        upcoming && React.createElement("p", { style: { color: "#c4a878", fontSize: 11, marginTop: 3 } },
+                        upcoming && React.createElement("p", { style: { color: "#888888", fontSize: 11, marginTop: 3 } },
                             "\u23F3 Opens in ",
                             React.createElement("span", { style: { color: "#a47830" } },
                                 upcoming.daysAway,
